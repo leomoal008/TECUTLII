@@ -23,8 +23,9 @@ import TOC from '../plugins/TOC';
 import * as resourcesCatalogPlugins from '../plugins/ResourcesCatalog';
 import SearchServicesConfig from "../plugins/SearchServicesConfig";
 import SecurityPopup from "../plugins/SecurityPopup";
+import SymbolGeneratorPlugins from '../plugins/SymbolGenerator';
 
-import {toModulePlugin} from "../utils/ModulePluginsUtils";
+import { toModulePlugin } from "../utils/ModulePluginsUtils";
 
 /**
   * Please, keep them sorted alphabetically
@@ -50,6 +51,7 @@ export const plugins = {
     SearchServicesConfigPlugin: SearchServicesConfig,
     SecurityPopupPlugin: SecurityPopup,
     TOCPlugin: TOC,
+    //SymbolGeneratorPlugins: SymbolGenerator,
 
     // ### DYNAMIC PLUGINS ### //
     // product plugins

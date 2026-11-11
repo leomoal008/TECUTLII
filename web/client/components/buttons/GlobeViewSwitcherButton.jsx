@@ -9,10 +9,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ToggleButton from './ToggleButton';
+/*  import ToggleButton from './ToggleButton';
 import { Tooltip } from 'react-bootstrap';
 import Message from '../I18N/Message';
-
+*/
 /**
  * Toggle button for 3d. Wraps {@link #components.buttons.ToggleButton} with some defaults
  * @memberof components.buttons
@@ -85,6 +85,13 @@ class GlobeViewSwitcherButton extends React.Component {
     };
 
     render() {
+        const showButton = false; // Cambia esto a true para mostrar el botón
+
+        return (
+            <div>
+               {showButton && <GlobeViewSwitcherButton {...props} />}
+            </div>
+        );
         return <ToggleButton {...this.getButtonProperties()} pressed={this.props.active} tooltip={<Tooltip id="globeViewSwitcher-tooltip"><Message msgId={this.props.active ? this.props.activeTooltip : this.props.notActiveTooltip}/></Tooltip>} />;
     }
 }

@@ -679,6 +679,21 @@ export const createDefaultStyleSymbolizer = (feature, defaultSymbolizers = {}) =
     }
     return null;
 };
+
+export const createDefaultStyleSymbolizers = (feature, defaultSymbolizers = {}) => {
+    const symbolizer = createDefaultStyleSymbolizer(feature, defaultSymbolizers);
+    if (feature?.properties?.annotationType !== 'Point') {
+        return [symbolizer];
+    }
+    return [
+        symbolizer,
+        {
+            ...createDefaultStyleSymbolizer({ properties: { annotationType: 'Text' } }, defaultSymbolizers),
+            label: '{{name}}',
+            offset: [12, 0]
+        }
+    ];
+};
 // validate properties for specific annotation features
 const validateProperties = (feature) => {
     if (feature?.properties?.annotationType === 'Text') {

@@ -16,6 +16,7 @@ import { searchResources } from './actions/resources';
 import { getPendingChanges } from './selectors/save';
 import { push } from 'connected-react-router';
 import useIsMounted from '../../hooks/useIsMounted';
+import { userSelector } from '../../selectors/security';
 
 /**
  * Plugin to delete a resource
@@ -30,7 +31,8 @@ function DeleteResource({
     component,
     onRefresh,
     redirectTo,
-    onPush
+    onPush,
+    user
 }) {
     const Component = component;
     const [showModal, setShowModal] = useState(false);
@@ -65,7 +67,7 @@ function DeleteResource({
                 }));
         }
     }
-    if (!(resource?.id && resource?.canDelete)) {
+    if (!(resource?.id && user?.role === 'ADMIN')) {
         return null;
     }
     return (
@@ -102,7 +104,8 @@ const deleteResourcesConnect = connect(
             }
             const pendingChanges = getPendingChanges(state, { resourceType: 'MAP', ...props });
             return pendingChanges?.resource;
-        }
+        },
+        user: userSelector
     }),
     {
         onRefresh: searchResources.bind(null, { refresh: true }),
@@ -116,7 +119,7 @@ export default createPlugin('DeleteResource', {
     component: () => null,
     containers: {
         ResourcesGrid: {
-            target: 'card-options',
+            target: 'card-buttons',
             position: 1,
             priority: 4,
             Component: DeleteResourcePlugin

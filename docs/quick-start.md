@@ -18,7 +18,7 @@ Windows: `mapstore2_startup.bat`
 
 Linux: `./mapstore2_startup.sh`
 
-Point your browser to: [http://localhost:8082/mapstore](http://localhost:8082/mapstore)
+Point your browser to: [http://localhost:8082/tecutli](http://localhost:8082/tecutli)
 
 To stop MapStore simply do:
 
@@ -59,6 +59,6 @@ If you don't have a java web container you can download Apache Tomcat from [here
 
 Then you can access MapStore using the following URL (assuming the web container is on the standard 8080 port):
 
-[http://localhost:8080/mapstore](http://localhost:8080/mapstore)
+[http://localhost:8080/tecutli](http://localhost:8080/tecutli)
 
 Use the default credentials (admin / admin) to login and start creating your maps!

@@ -1,0 +1,10 @@
+/*Estilo básico para el pluginn nene malo*/
+.symbol-generator-container {
+    padding: 20px;
+    background: #f0f0f0;
+    border-radius: 8px;
+}
+
+.symbol-generator-container h1 {
+    color: #333;
+}

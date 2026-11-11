@@ -393,7 +393,7 @@
     },
     "home": {
       "open": "Open",
-      "shortDescription": "<h1>Welcome to MapStore</h1><p>Modern webmapping with OpenLayers, Cesium, Leaflet and ReactJS.</p>",
+      "shortDescription": "<h1>Geospatial Visualization System 'TECUTLI'</h1><p>General Directorate of Cartography.</p>",
       "forkMeOnGitHub": "Fork me on GitHub",
       "description": "MapStore has been developed to create, save and share in a simple and intuitive way maps and mashups created selecting contents coming from well-known sources like OpenStreetMap, Google Maps or from services provided by organizations using open protocols like OGC WMS, WFS, WMTS or TMS and so on...<br/>Visit the <a href=\"https://mapstore.readthedocs.io/en/latest/\">home page</a> for more details.",
       "Applications": "Applications",
@@ -799,8 +799,7 @@
       "projection": "Coordinates System",
       "projectionmismatch": "Coordinate system mismatch among printed and screen map",
       "graticule": "add grid with labels",
-      "additionalLayers": "Include overlays",
-      "createScaleOption": "Add new scale to list"
+      "additionalLayers": "Include overlays"
     },
     "backgroundSwitcher": {
       "tooltip": "Select Background"
@@ -1590,8 +1589,8 @@
       },
       "formats": {
         "mapstore2": {
-          "label": "MapStore",
-          "description": "<p><small>MapStore map configuration format</small></p>"
+          "label": "Json",
+          "description": "<p><small>TECUTLI map configuration format</small></p>"
         },
         "wmc": {
           "label": "WMC",
@@ -1989,7 +1988,6 @@
     "layerdownload": {
       "title": "Export Data",
       "service": "Service",
-      "downloadMode": "Download Mode",
       "format": "File Format",
       "srs": "Spatial Reference System",
       "export": "Export",
@@ -2019,16 +2017,6 @@
         "executeProcessXhrFailed": "ExecuteProcess request failed! The server might be misconfigured or it has become unreachable",
         "getExecutionStatusXhrFailed": "GetExecutionStatus request failed! The server might be misconfigured or it has become unreachable",
         "unexpectedError": "Unexpected error occurred"
-      },
-      "services": {
-        "wps": {
-          "title": "Asynchronous (WPS)",
-          "tooltip": "Asynchronous mode with WPS (Web Processing Service) works by executing a remote process; once the processing is complete, you will receive a notification with a link to download the data."
-        },
-        "wfs": {
-          "title": "Synchronous (WFS)",
-          "tooltip": "Synchronous download with WFS (Web Feature Service), suitable for small datasets, works by sending a request that immediately returns a vector file."
-        }
       },
       "noSupportedServiceFound": "The server doesn't support WFS or WPS download for this layer!"
     },
@@ -2133,7 +2121,6 @@
           "useTheSelectedLayer": "Use the selected layer",
           "connectToAMap": "Connect to another widget",
           "connectToTheMap": "Connect to the map",
-          "connectToTheTable": "Connect to the table",
           "selectMapToConnect": "Select the widget to connect",
           "clearConnection": "Clear connection",
           "disableConnectToMap": "Operation unavailable",
@@ -2986,8 +2973,7 @@
       "errorUpdatingGSInstance": "Error saving GS Instance.",
       "errorDuplicateGSInstance": "Duplicated GS instance.",
       "errorDeleteGSInstance": "Error deleting GS instances.",
-      "errorDeleteGSInstanceWithExistRelRules": "Error as there are some related rules to GS instance \"{gsInstanceTitle}\" need to be deleted first.",
-      "successDeleteGSInstance": "{successfulNum} {successItemLabel} deleted successfully {failureMsg}",
+      "successDeleteGSInstance": "GS instance has been deleted successfully.",
       "successSavedGSInstance": "GS instance has been saved successfully.",
       "errorLoading": "Error loading",
       "deleteModal": "Delete Rules",
@@ -4387,7 +4373,6 @@
       "readLess": "Read less",
       "noPermissionsAvailable": "No permission available",
       "noAbout": "No additional information about the resource",
-      "loadingAbout": "Loading about...",
       "addResource": "Add Resource",
       "createMap": "Create map",
       "createDashboard": "Create dashboard",

@@ -18,6 +18,7 @@ From the *Geometries* tab, the editor can choose between five different types of
 * **Polygon** <img src="../img/button/polygon2.jpg" class="ms-docbutton" />
 * **Text** <img src="../img/button/text2.jpg" class="ms-docbutton" />
 * **Circle** <img src="../img/button/circle2.jpg" class="ms-docbutton" />
+* **Polygon** <img src="../img/button/burg02.jpg" class="ms-docbutton" />
 
 <img src="../img/annotations/geometries-tab.jpg" class="ms-docimage"  style="max-width:500px;"/>
 

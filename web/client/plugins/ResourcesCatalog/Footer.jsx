@@ -187,20 +187,20 @@ Footer.contextTypes = {
 
 Footer.defaultProps = {
     menuItems: [
-        {
-            type: 'link',
-            href: "https://docs.mapstore.geosolutionsgroup.com/",
-            target: 'blank',
-            glyph: 'book',
-            labelId: 'resourcesCatalog.documentation'
-        },
-        {
-            type: 'link',
-            href: 'https://github.com/geosolutions-it/MapStore2',
-            target: 'blank',
-            label: 'GitHub',
-            glyph: 'github'
-        }
+        /* {
+                type: 'link',
+                href: "https://docs.mapstore.geosolutionsgroup.com/",
+                target: 'blank',
+                glyph: 'book',
+                labelId: 'resourcesCatalog.documentation'
+            },
+            {
+                type: 'link',
+                href: 'https://github.com/geosolutions-it/MapStore2',
+                target: 'blank',
+                label: 'GitHub',
+                glyph: 'github'
+            }*/
     ],
     customFooter: false,
     customFooterMessageId: 'home.footerCustomHTML'

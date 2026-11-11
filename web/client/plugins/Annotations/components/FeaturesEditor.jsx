@@ -20,7 +20,7 @@ import tooltip from '../../../components/misc/enhancers/tooltip';
 import {
     ANNOTATIONS,
     annotationsSymbolizerDefaultProperties,
-    createDefaultStyleSymbolizer,
+    createDefaultStyleSymbolizers,
     validateFeature,
     applyDefaultCoordinates,
     parseUpdatedCoordinates,
@@ -214,10 +214,11 @@ export function FeaturesEditor({
                                 filter: ['==', 'id', id],
                                 mandatory: type !== 'Point',
                                 ruleId: uuid(),
-                                symbolizers: [{
-                                    symbolizerId: uuid(),
-                                    ...createDefaultStyleSymbolizer(newFeature, defaultSymbolizers)
-                                }]
+                                symbolizers: createDefaultStyleSymbolizers(newFeature, defaultSymbolizers)
+                                    .map(symbolizer => ({
+                                        symbolizerId: uuid(),
+                                        ...symbolizer
+                                    }))
                             }
                         ]
                     }

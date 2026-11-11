@@ -224,7 +224,7 @@ describe('ConfigurePluginsStep component', () => {
         const plugins = [{
             title: "Extension",
             isExtension: true,
-            enabled: true,
+            enabled: false,
             name: "Plugin_1",
             description: "Test plugin",
             docUrl

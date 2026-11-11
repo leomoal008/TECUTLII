@@ -28,10 +28,7 @@
           "https://maps6.geosolutionsgroup.com/geoserver/wms"
         ],
         "visibility": true,
-        "singleTile": false,
-        "credits": {
-          "title": "OSM Bright | Rendering <a href=\"https://www.geo-solutions.it/\">GeoSolutions</a> | Data © <a href=\"http://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>"
-        }
+        "singleTile": false
       }
     ]
   }

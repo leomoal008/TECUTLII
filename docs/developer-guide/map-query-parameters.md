@@ -113,11 +113,11 @@ Here a sample page you can create to test the service:
             <option value="POST_IFRAME">POST_IFRAME</option>
         </select>
     <br/>
-    <label>MapStore Base URL:</label><input type="text" id="mapstore-base" value="http://localhost:8080/mapstore/">
+    <label>MapStore Base URL:</label><input type="text" id="mapstore-base" value="http://localhost:8080/tecutli/">
 </input><br/>
 </fieldset>
 <!-- Place the URL of your MapStore in "action" -->
-<form id="post-form" action="http://localhost:8080/mapstore/rest/config/setParams" method="POST" target="_blank">
+<form id="post-form" action="http://localhost:8080/tecutli/rest/config/setParams" method="POST" target="_blank">
     <fieldset>
         <legend>Params:</legend>
         <label for="map">map:</label><br/><textarea id="map" name="map"></textarea><br/>

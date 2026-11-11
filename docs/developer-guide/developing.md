@@ -160,6 +160,7 @@ Running MapStore backend locally, on start-up you will find the following users:
 
 * `admin`, with ADMIN role and password `admin`
 * `user` with USER role with password `user`
+* `mora`, with ADMIN role and password `mora`
 
 You can login as `admin` to set-up new users and access to all the features reserved to `ADMIN` users.
 
@@ -177,7 +178,7 @@ MapStore is configured to use a maven plugin-in to build and run mapstore locall
 
 Now you are good to go, and you can start the frontend
 
-Your local backend will now start at [http://localhost:8080/mapstore/](http://localhost:8080/mapstore/).
+Your local backend will now start at [http://localhost:8080/tecutli/](http://localhost:8080/tecutli/).
 If you want to change the port you can edit the dedicated entry in `product/pom.xml`, just remember to change also the dev-server proxy configuration on the frontend in the same way.
 
 ##### Embedded tomcat properties
@@ -209,9 +210,9 @@ If you prefer, or if you have some problems with `mvn cargo:run`, you can run Ma
 To do so, you can :
 
 * download a tomcat standalone [here](https://mapstore.readthedocs.io/en/latest/developer-guide/requirements/) and extract to a folder of your choice
-* To generate a war file that will be deployed on your tomcat server, go to the root of the Mapstore project that was git cloned and run `./build.sh`. This might take some time but at the end a war file named `mapstore.war` will be generated into the `product/target` folder.
-* Copy the `mapstore.war` and then head back to your tomcat folder. Look for a `webapps` folder and paste the `mapstore.war` file there.
-* To start tomcat server, go to the terminal, `cd` into the root of your tomcat extracted folder and run `./bin/startup.sh` ( unix systems) or `./bin/startup.bat` (Windows). The server will start on port `8080` and Mapstore will be running at `http://localhost:8080/mapstore`. For development purposes we're only interested in the backend that was started on the tomcat server along with Mapstore.
+* To generate a war file that will be deployed on your tomcat server, go to the root of the Mapstore project that was git cloned and run `./build.sh`. This might take some time but at the end a war file named `tecutli.war` will be generated into the `product/target` folder.
+* Copy the `tecutli.war` and then head back to your tomcat folder. Look for a `webapps` folder and paste the `tecutli.war` file there.
+* To start tomcat server, go to the terminal, `cd` into the root of your tomcat extracted folder and run `./bin/startup.sh` ( unix systems) or `./bin/startup.bat` (Windows). The server will start on port `8080` and Mapstore will be running at `http://localhost:8080/tecutli`. For development purposes we're only interested in the backend that was started on the tomcat server along with Mapstore.
 
 Even in this case you can connect your frontend to point to this instance of MapStore.
 

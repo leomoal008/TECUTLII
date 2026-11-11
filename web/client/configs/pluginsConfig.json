@@ -123,13 +123,7 @@
       "title": "plugins.Details.title",
       "description": "plugins.Details.description"
     },
-    {
-      "name": "HelpLink",
-      "glyph": "question-sign",
-      "title": "plugins.HelpLink.title",
-      "description": "plugins.HelpLink.description",
-      "dependencies": ["SidebarMenu"]
-    },
+    
     {
       "name": "Share",
       "glyph": "share",
@@ -429,14 +423,6 @@
       "title": "plugins.SaveAs.title",
       "hidden": false,
       "description": "plugins.SaveAs.description",
-      "dependencies": ["SidebarMenu"]
-    },
-    {
-      "name": "DeleteResource",
-      "glyph": "trash",
-      "title": "plugins.DeleteMap.title",
-      "hidden": false,
-      "description": "plugins.DeleteMap.description",
       "dependencies": ["SidebarMenu"]
     },
     {

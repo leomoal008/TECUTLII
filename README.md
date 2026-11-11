@@ -76,7 +76,7 @@ Use the default credentials (admin / admin) to login and start creating your map
 
 - After the docker-compose finish, you can access to the site using following URL:
 
-  [http://localhost/mapstore](http://localhost/mapstore)
+  [http://localhost/tecutli](http://localhost/tecutli)
 
 - Use the default credentials (**admin** / **admin**) to login and start creating your maps!
 - After finished the test you can stop the environment with the command:
@@ -99,7 +99,7 @@ Check out <a href="https://docs.mapstore.geosolutionsgroup.com/en/latest/develop
 
 Then you can access MapStore using the following URL (assuming the web container is on the standard 8080 port):
 
-[http://localhost:8080/mapstore](http://localhost:8080/mapstore)
+[http://localhost:8080/tecutli](http://localhost:8080/tecutli)
 
 Use the default credentials (admin / admin) to login and start creating your maps!
 

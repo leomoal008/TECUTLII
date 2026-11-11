@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Tilo Wuetherich, Landesarchiv Baden-Wuerttemberg SVG
+  Version: 6.00 Build 51448 -->
+
+<svg
+   version="1.1"
+   id="Ebene_1"
+   width="20"
+   height="20"
+   viewBox="0 0 20 20"
+   overflow="visible"
+   enable-background="new 0 0 20 20"
+   xml:space="preserve"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs1" />
+  <line
+   fill="none"
+   stroke="#000000"
+   stroke-width="0.89478"
+   x1="10.618402"
+   y1="10.157755"
+   x2="10.618402"
+   y2="1.601951"
+   id="line1" />
+  <circle
+   fill="none"
+   stroke="#000000"
+   stroke-width="1"
+   cx="10"
+   cy="15"
+   id="ellipse1"
+   r="4" />
+  <polygon
+   fill="#ff0000"
+   stroke="#000000"
+   stroke-width="1"
+   points="18,4 10,7 10,0 "
+   id="polygon1"
+   transform="matrix(0.9357761,0,0,0.85558033,1.2606402,1.601951)" />
+</svg>

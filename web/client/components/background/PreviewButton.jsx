@@ -37,7 +37,7 @@ class PreviewButton extends React.Component {
         margin: 5,
         labelHeight: 29,
         label: '',
-        showLabel: true,
+        showLabel: false,
         tooltipId: "backgroundSwitcher.tooltip",
         onToggle: () => {},
         onAdd: () => {}

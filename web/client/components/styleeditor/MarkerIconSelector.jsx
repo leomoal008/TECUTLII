@@ -1,13 +1,5 @@
-/*
- * Copyright 2023, GeoSolutions Sas.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import React, { useState } from 'react';
-import { Nav, NavItem, FormGroup, InputGroup } from "react-bootstrap";
+import { Nav, NavItem, FormGroup, InputGroup, Modal } from "react-bootstrap";
 import Popover from './Popover';
 import SVGPreview from './SVGPreview';
 import tooltip from '../misc/enhancers/tooltip';
@@ -28,7 +20,7 @@ const markers = MarkerUtils.markers.extra.getGrid().reduce((acc, row) =>
             label: `${marker.style.color} ${marker.style.shape}`
         }))
     ]
-, []);
+    , []);
 
 const glyphs = Object.keys(MarkerUtils.getGlyphs('fontawesome'));
 
@@ -43,10 +35,11 @@ const Button = tooltip(ButtonRB);
  */
 function MarkerIconSelector({
     value,
-    onChange = () => {}
+    onChange = () => { }
 }) {
     const [tab, setTab] = useState('marker');
     const [filter, setFilter] = useState('');
+    const [showMyWindow, setShowMyWindow] = useState(false);
     const { args } = value || {};
     const { color, shape, glyph } = (args || [])[0] || {};
     const selectedMarker = markers.find(marker => marker.style.color === color && marker.style.shape === shape);
@@ -101,13 +94,13 @@ function MarkerIconSelector({
                                             fill: `url(#${color}-${shape})`
                                         }]}
                                     />
-                                </div>} <Message msgId="styleeditor.marker"/>
+                                </div>} <Message msgId="styleeditor.marker" />
                             </NavItem>
                             <NavItem
                                 key="glyph"
                                 eventKey="glyph"
                                 onClick={() => setTab('glyph')}>
-                                {glyph && <i className={`fa fa-${glyph}`}/>} <Message msgId="styleeditor.glyph"/>
+                                {glyph && <i className={`fa fa-${glyph}`} />} <Message msgId="styleeditor.glyph" />
                             </NavItem>
                         </Nav>
                         <FormGroup style={{ margin: '0.5em 0' }}>
@@ -117,9 +110,43 @@ function MarkerIconSelector({
                                     value={filter}
                                     placeholder="styleeditor.filterByName"
                                     style={{ zIndex: 0 }}
-                                    onChange={eventValue => setFilter(eventValue)}/>
+                                    onChange={eventValue => setFilter(eventValue)} />
                             </InputGroup>
+                            <div style={{ padding: '0.5em 0.5em 0 0.5em' }}>
+                                <ButtonRB
+                                    bsStyle="primary"
+                                    bsSize="xs"
+                                    style={{ width: '100%' }}
+                                    onClick={() => {
+
+                                        setShowMyWindow(true);
+                                    }}
+                                >
+                                    MOGA MOGA
+                                </ButtonRB>
+                            </div>
                         </FormGroup>
+                        <Modal show={showMyWindow}
+                            onHide={() => setShowMyWindow(false)}
+                            backdrop="static"
+                            keyboard={false}
+                            container={document.getElementById('theme-wrapper')}
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title>
+                                    GenSiM
+                                </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <div style={{ padding: '20px', textAlign: 'center' }}>
+                                    <h4>¡Hola nn!</h4>
+                                    <h2>Aquí­ puede que sea la extensión al código del GenSiM</h2>
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <ButtonRB onClick={() => setShowMyWindow(false)}>cerrar</ButtonRB>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
                     <ul>
                         {tab === 'marker' && filteredMarkers.map((marker) => {
@@ -169,7 +196,7 @@ function MarkerIconSelector({
                                             shape
                                         })}
                                     >
-                                        <i className={`fa fa-${glyphName}`}/>
+                                        <i className={`fa fa-${glyphName}`} />
                                     </Button>
                                 </li>
                             );
@@ -197,6 +224,7 @@ function MarkerIconSelector({
                     }]}
                 />}
             </Button>
+
         </Popover>
     );
 }

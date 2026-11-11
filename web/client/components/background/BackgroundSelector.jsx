@@ -282,7 +282,7 @@ class BackgroundSelector extends React.Component {
     };
 
     render() {
-        return this.props.layers.length > 0 ? this.renderBackgroundSelector() : null;
+        return null;
     }
 }
 

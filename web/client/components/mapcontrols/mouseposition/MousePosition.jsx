@@ -9,15 +9,15 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 import proj4js from 'proj4';
-import { Glyphicon, Label } from 'react-bootstrap';
-import CopyToClipboard from 'react-copy-to-clipboard';
+// import { Glyphicon, Label } from 'react-bootstrap';
 import { reproject, getUnits } from '../../../utils/CoordinatesUtils';
 import MousePositionLabelDMS from './MousePositionLabelDMS';
 import MousePositionLabelYX from './MousePositionLabelYX';
+import MousePositionLabelMGRS from './MousePositionLabelMGRS';
 import CRSSelector from './CRSSelector';
 import Message from '../../I18N/Message';
 import { isNumber } from 'lodash';
-import Button from '../../misc/Button';
+// import Button from '../../misc/Button';
 
 import './mousePosition.css';
 /**
@@ -46,10 +46,8 @@ class MousePosition extends React.Component {
         crsTemplate: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
         elevationTemplate: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
         style: PropTypes.object,
-        copyToClipboardEnabled: PropTypes.bool,
         glyphicon: PropTypes.string,
         btnSize: PropTypes.oneOf(["large", "medium", "small", "xsmall"]),
-        onCopy: PropTypes.func,
         onCRSChange: PropTypes.func,
         toggle: PropTypes.object,
         showLabels: PropTypes.bool,
@@ -69,10 +67,8 @@ class MousePosition extends React.Component {
         crsTemplate: crs => <span className="mouseposition-crs">{crs}</span>,
         elevationTemplate: elevation => isNumber(elevation) ? <span className="mouseposition-elevation">{elevation} m</span> : <Message msgId="mousePositionNoElevation"/>,
         style: {},
-        copyToClipboardEnabled: false,
         glyphicon: "paste",
         btnSize: "xsmall",
-        onCopy: () => {},
         onCRSChange: function() {},
         toggle: <div></div>,
         showLabels: false,
@@ -101,8 +97,8 @@ class MousePosition extends React.Component {
 
     render() {
         let Template = this.props.mousePosition ? this.getTemplateComponent() : null;
+        const position = this.getPosition();
         if (this.props.enabled) {
-            const position = this.getPosition();
             return (
                 <div id={this.props.id} style={this.props.style}>
                     <span className="mapstore-mouse-coordinates">
@@ -113,13 +109,10 @@ class MousePosition extends React.Component {
                             </h5>
                         }
                     </span>
-                    {this.props.copyToClipboardEnabled &&
-                            <CopyToClipboard text={JSON.stringify(position)} onCopy={this.props.onCopy}>
-                                <Button bsSize={this.props.btnSize}>
-                                    {<Glyphicon glyph={this.props.glyphicon}/>}
-                                </Button>
-                            </CopyToClipboard>
-                    }
+                    {/* Campo MGRS adicional */}
+                    <span className="mapstore-mouse-mgrs-field" style={{marginRight: 10}}>
+                        <MousePositionLabelMGRS position={position} />
+                    </span>
                     {this.props.showElevation ? <span className="mapstore-mouse-elevation">
                         {this.props.showLabels ? <label><Message msgId="mousePositionElevation" /></label> : null}
                         <h5>{this.props.elevationTemplate(position.z)}</h5>

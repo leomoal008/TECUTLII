@@ -23,13 +23,21 @@ import {
     parseUpdatedCoordinates,
     validateFeature,
     applyDefaultCoordinates,
-    getFeatureIcon
+    getFeatureIcon,
+    createDefaultStyleSymbolizers
 } from '../AnnotationsUtils';
 import { annotationsTest, annotationsTestResult, annotationsTestFromGeoJson } from './resources';
 
 import { MeasureTypes } from '../../../../utils/MeasureUtils';
 
 describe('AnnotationsUtils', () => {
+    it('creates a marker icon and a persistent label bound to its name', () => {
+        const symbolizers = createDefaultStyleSymbolizers({ properties: { annotationType: 'Point' } });
+
+        expect(symbolizers.map(({ kind }) => kind)).toEqual(['Icon', 'Text']);
+        expect(symbolizers[1].label).toBe('{{name}}');
+        expect(symbolizers[1].offset).toEqual([12, 0]);
+    });
     it('isGeodesicMeasure', () => {
         expect(isGeodesicMeasure(MeasureTypes.LENGTH)).toBe(true);
         expect(isGeodesicMeasure(MeasureTypes.AREA)).toBe(true);

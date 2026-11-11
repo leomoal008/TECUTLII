@@ -1,0 +1,5242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Generador simbología OTAN</title>
+
+  <script src="js/gensimOTAN.js"></script>  
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+
+      background-image:
+        url("img/fondo_3.png"),
+        url("img/fondo_3.png");
+
+      background-position:
+        left center,
+        right center;
+
+      background-size:
+        contain,
+        cover;
+
+      background-repeat: 
+        repeat-y,
+        repeat-y;
+
+      overflow: auto;   
+     
+    }
+
+    .app-window {
+      width: 1300px;
+      min-width: 1300px;    
+      background: #f5f5f5;
+      border-radius: 16px;
+      position: relative;
+      top: 20px;
+      text-align: center;   
+      padding-top: 0px; 
+      margin: 20px auto;
+    }
+
+
+    .app-header{
+      width:100%;
+      padding:5px 20px 10px 20px; 
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:center;
+      background: transparent; 
+      box-sizing: border-box;
+    }
+
+
+    .titulos{
+      text-align:top;
+    }
+
+    .titulo-principal {  
+      font-size: 30px;
+      font-weight: bold;
+      color: #222;
+    }
+
+    .subtitulo {
+      margin-top: 4px;
+      font-size: 14px;
+      color: #555;
+    }
+
+
+    .logos{
+      height:auto;      
+    }
+
+
+    .logo-izq{
+      justify-self:start;
+      width:250px;  
+    }
+
+
+    .logo-der{
+      justify-self:end;
+      width:250px;  
+    }  
+
+    .separador1 {
+      width: 500px;        
+      height: 4px;         
+      background: #bbb;
+      margin: -20px auto 12px auto; 
+    }
+    .selector-group {
+      display: flex; 
+      gap: 20px;
+      margin-left: 40px;
+      align-items: center; 
+      font-size: 18px;
+    }
+
+    .selector-group select {
+      width: 200px;        
+      height: auto;
+      padding: 2px 6px;
+      font-size: 18px;
+      box-sizing: border-box;
+      align-items: center;
+    }
+
+    .btn-top-wrapper{
+      width:100%;
+      padding:10px 69px 0px 10px; 
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:center;
+      background: transparent; 
+      box-sizing: border-box;
+    }
+
+
+    #btn-basico {
+      font-size: 17px;
+      font-weight: 700;
+      width: 160px;
+      height: 35px;
+
+      background-color: #495057; 
+      color: #ffffff;
+
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      justify-self:start;
+      margin-left: 40px;
+    }
+
+    #btn-basico:hover {
+      background-color: #343a40;
+    }
+
+    #btn-basico:active {
+      filter: brightness(1.2);
+    }
+
+    #btn-ayuda {
+      font-size: 17px;       
+      font-weight: 700;      
+      
+      width: 160px;         
+      height: 25px;          
+
+      background-color: #ff831e;  
+      color: #ffffff;            
+
+      border: none;
+      border-radius: 6px;    
+      cursor: pointer;
+
+      margin-top: 0px;
+      justify-self:end;       
+    }
+
+    #btn-ayuda:hover {
+      background-color: #1c7ed6;
+    }
+
+    #btn-ayuda:active {
+    filter: brightness(1.25);
+    }
+
+
+    #itcs {
+      text-decoration: underline; 
+      font-size: 18px;
+      padding:0px 10px 0px 10px;    
+    }
+
+
+    .symbol-set {
+      width: 100%;
+
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: nowrap;      
+      overflow-x: auto;     
+      gap: 6px;
+      padding: 15px 10px;
+      white-space: nowrap;
+    }
+
+
+    .tab {
+      flex: 0 0 auto;         
+      padding: 6px 12px;
+      border: 1px solid #888;
+      background: #eee;
+      border-radius: 6px 6px 0 0;
+      cursor: pointer;
+      font-size: 13px;
+      white-space: nowrap;  
+    }
+
+
+    .tab.active {
+      background: #f5f5f5;
+      font-weight: bold;
+    }
+
+
+    .tab-content {
+      width: 1200px;
+      margin: 0 auto;
+      display: none;
+      background: #eeecece3;
+      padding: 2px;
+      border-radius: 0 8px 8px 8px;
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.15);
+      padding-bottom: 20px;
+      max-width: auto;
+      margin: 0 auto;
+      }
+
+    .tab-content.active {
+      display: block;
+    }
+
+
+    .unidad-tierra-grid {
+      display: grid;
+      grid-template-columns: 22% 56% 22%;
+      width: 100%;
+      box-sizing: border-box;
+      gap: 0px;
+      padding: 0px;
+    }
+
+
+    .ut-column.left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;        
+    }
+
+
+    .ut-column.left .ut-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 7px;
+      align-items: flex-start;      
+    }
+
+
+    .ut-column.left label {
+      width: 220px;
+      text-align: left;
+      font-size: 15px;
+    }
+
+
+    .ut-column.left input,
+    .ut-column.left select {
+      width: 220px;
+      box-sizing: border-box;
+    }
+
+
+
+
+
+    .ut-column.right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;       
+    }
+
+
+    .ut-column.right .ut-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 7px;
+      align-items: flex-start;    
+    }
+
+
+    .ut-column.right label {
+      width: 220px;
+      text-align: left;
+      font-size: 15px;
+    }
+
+
+    .ut-column.right input,
+    .ut-column.right select {
+      width: 220px;
+      box-sizing: border-box;
+    }
+
+    .ut-column.right .ut-group.amp-j select {
+      width: 107px;
+    }
+
+
+
+    .ut-column.center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ut-column.center .ut-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ut-column.center label {
+      width: 200px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .ut-column.center input,
+    .ut-column.center select {
+      width: 200px;
+      box-sizing: border-box;
+    }
+
+    .center-fixed {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 0px;
+    }
+
+    .center-dynamic {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px 1px;
+      justify-items: center;
+      width: 100%;
+    }
+
+    #sidc-viewer {
+      z-index:10;      
+      font-family: monospace;
+      font-size: 12px;
+      background: #222;
+      color: #00ffcc;
+      padding: 3px 10px;
+      border-radius: 6px;
+      width: fit-content;
+      transform: translateY(10px);
+      gap: 6px;
+      align-items: center;
+    }
+
+    #sidc-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #00ffcc;
+      font-family: monospace;
+      font-size: 12px;
+      width: 205px;
+    }
+
+    #symbol-viewer {
+      width: 580px;
+      height: 235px;
+      margin: 0 auto; 
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    #resultado {
+      width: calc(100% - 50px);
+      height: calc(100% - 50px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    #resultado svg {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    #resultado {
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    #resultado.fade-out {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    #resultado.fade-in {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+
+    .identity-selectors button {
+    padding: 3px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    border: 1px solid #888;
+    background: #eee;
+    transform: translateY(-10px);
+  }
+
+
+    .visualizador-float {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      z-index: 20;
+    }
+
+
+    #btn-visualizador {
+      padding: 6px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+
+
+    .visualizador-preview {
+      position: absolute;
+      top: 32px;
+      right: 0;
+      display: none;
+      padding: 6px;
+      background: #000;
+      border-radius: 6px;
+    }
+
+    .visualizador-preview img {
+      max-width: 260px;
+      border-radius: 4px;
+    }
+
+
+    .visualizador-float:hover .visualizador-preview {
+      display: block;
+    }
+
+
+    .visualizador-container:hover .visualizador-preview {
+      display: block;
+    }
+
+
+    .visualizador-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      z-index: 999;
+    }
+
+    .visualizador-modal-content {
+      position: relative;
+      margin: 5% auto;
+      max-width: 80%;
+      background: #111;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .visualizador-modal-content img {
+      max-width: 100%;
+    }
+
+
+    #visualizador-close {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .tab-header {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 12px;
+    }
+
+   
+    .tab-header h3 {
+      grid-column: 2;
+      margin: 0;
+      text-align: center;
+      font-size: 18px;
+    }
+
+
+    .visualizador-container {
+      grid-column: 3;
+      margin: 0;
+    }
+
+    #btn-visualizador {
+      padding: 6px 14px;
+      font-size: 13px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+
+
+
+  </style>
+</head>
+
+<body>
+
+  <div class="app-window">    
+    <!-- HEADER FIJO -->
+    <div class="app-header">
+      <img src="img/izq.png" class="logos logo-izq">
+
+      <div class="titulos">
+        <div class="titulo-principal">Generador de símbolos conforme<br>el estandár MIL-STD-2525D</div>
+        <div class="subtitulo">Prototipo por la D.G.CART.</div>
+      </div>
+
+      <img src="img/der_cent_rodela_mas_mas.png" class="logos logo-der">
+    </div>   
+ 
+    <!-- Identidad estándar -->
+    <div class="identity-block">
+      <div class="separador1">
+    </div>
+
+    <div class="identity-block" >
+      
+      <div class="selector-group">
+
+        <div class="identity-standar-title">
+          Identidad Estándar:
+        </div>
+        
+        <div class="selector-item">
+          <label for="context">Contexto:</label>
+          <select id="context">
+            <option value="0" selected >Realidad</option>
+            <option value="1">Ejercicio</option>
+            <option value="2">Simulación</option>
+          </select>
+        </div>
+
+        <div class="selector-item">
+          <label for="identity">Afiliación:</label>
+          <select id="identity">
+            <option value="0">Pendiente</option>
+            <option value="1">Desconocido</option>
+            <option value="2">Asumido Amigo</option>
+            <option value="3" selected >Amigo</option>
+            <option value="4">Neutral</option>
+            <option value="5">Sospechoso / Joker</option>
+            <option value="6">Hostil / Faker</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-top-wrapper">
+      <button id="btn-basico">M.S.A. y T.M.</button>
+      <button id="btn-ayuda">Ayuda</button>
+    </div>
+    
+    <div class="identity-title" id="itcs">
+      Conjunto de símbolos:
+    </div> 
+
+    <div class="center-fixed" id="center-slot">
+      <!-- SIDC FIJO -->
+      <div id="sidc-viewer">
+        SIDC:
+        <input
+          id="sidc-input"
+          type="text"
+          maxlength="30"
+          placeholder="Pegue SIDC y presione Enter"
+        >
+      </div>  
+      
+      <div id="symbol-viewer">
+        <div id="resultado"></div>
+      </div>
+
+      <div class="identity-selectors">
+        <button id="download-svg">Descargar SVG</button>
+        <button id="download-png">Descargar PNG</button>
+      </div> 
+    </div>          
+
+  <div class="symbol-set">
+
+    <!-- Pestañas -->
+    <div class="tabs">
+      <button class="tab" data-tab="tab-00">00 Desconocido</button>
+      <button class="tab" data-tab="tab-01">01 Aire</button>
+      <button class="tab" data-tab="tab-02">02 Aire (misil)</button>
+      <button class="tab" data-tab="tab-05">05 Espacio</button>
+      <button class="tab" data-tab="tab-06">06 Espacio (misil)</button>
+      <button class="tab active" data-tab="tab-10">10 Unidad de Tierra</button>
+      <button class="tab" data-tab="tab-11">11 Unidad de Tierra Civil / Organización</button>
+      <button class="tab" data-tab="tab-15">15 Equipo Terrestre</button>
+      <button class="tab" data-tab="tab-20">20 Instalación de Tierra</button>
+      <button class="tab" data-tab="tab-25">25 Medidas de Control</button>
+      <button class="tab" data-tab="tab-30">30 Superficie de mar</button>
+      <button class="tab" data-tab="tab-35">35 Subsuelo de mar</button>
+      <button class="tab" data-tab="tab-36">36 Guerra de minas</button>
+      <button class="tab" data-tab="tab-40">40 Actividades</button>
+      <button class="tab" data-tab="tab-45">45 Atmosférico</button>
+      <button class="tab" data-tab="tab-46">46 Oceanográfico</button>
+      <button class="tab" data-tab="tab-47">47 UEspacio Meteorológico</button>
+      <button class="tab" data-tab="tab-50">50 Inteligencia de señales Espacio</button>
+      <button class="tab" data-tab="tab-51">51 nteligencia de señales Aéreo</button>
+      <button class="tab" data-tab="tab-52">52 Inteligencia de señales Terrestre</button>
+      <button class="tab" data-tab="tab-53">53 Inteligencia de señales Superficie</button>
+      <button class="tab" data-tab="tab-54">54 Inteligencia de señales Subsuelo</button>
+      <button class="tab" data-tab="tab-60">60 Ciberespacio</button>
+    </div>
+
+    <!-- Contenido -->
+    <div class="tab-content" id="tab-00">
+      
+      <div class="tab-header">
+        <h3>Amplificadores del conjunto
+        <b>Desconocido</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador" id="tab-00">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left"></div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp="ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp="b">
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="27">Individuo / Elemento</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="30">Grupo</option>                    
+                  <option value="16">Batallón / Regimiento</option>
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>     
+
+          </div>
+
+
+          <div class="center-anchor" data-slot="center"></div>
+
+
+          <div class="center-dynamic">
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp="al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+            </div>  
+          </div>
+        </div>
+
+
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              data-tab="tab-00"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              data-tab="tab-00"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              data-tab="tab-00"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              data-tab="tab-00"
+              placeholder="8km/h" 
+            />
+          </div>  
+
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="tab-content" id="tab-01">
+    
+
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Aire</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/aire.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left"></div>
+
+
+        <div class="ut-column center">
+
+
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div> 
+
+
+            <div class="ut-group">
+              <label>Modificador 1</label>              
+              <select data-amp="m1" data-tab="tab-01">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="00">No aplicable </option>
+                <option value="01">Ataque / Golpe </option>
+                <option value="02">Bombardero </option>
+                <option value="03">Carga / Transporte de carga </option>
+                <option value="04">Caza </option>
+                <option value="05">Interceptor </option>
+                <option value="06">Reabastecimiento en vuelo (Tanquero) </option>
+                <option value="07">Utilitario </option>
+                <option value="08">Despegue y aterrizaje vertical o corto (VSTOL / VTOL) </option>
+                <option value="09">Transporte de pasajeros </option>
+                <option value="10">Ultraligero </option>
+                <option value="11">Puesto de Comando Aerotransportado (ACP) </option>
+                <option value="12">Alerta temprana aerotransportada (AEW) </option>
+                <option value="13">Gubernamental </option>
+                <option value="14">Evacuación médica (MEDEVAC) </option>
+                <option value="15">Escolta </option>
+                <option value="16">Combate electrónico (EC) / Perturbador (Jammer) </option>
+                <option value="17">Patrulla </option>
+                <option value="18">Reconocimiento </option>
+                <option value="19">Entrenador / Adiestramiento </option>
+                <option value="20">Reconocimiento fotográfico </option>
+                <option value="21">Recuperación de personal </option>
+                <option value="22">Guerra antisubmarina (ASW) </option>
+                <option value="23">Comunicaciones </option>
+                <option value="24">Apoyo electrónico (ES) </option>
+                <option value="25">Contramedidas de minas (MCM) </option>
+                <option value="26">Búsqueda y rescate (SAR) </option>
+                <option value="27">Fuerzas de operaciones especiales </option>
+                <option value="28">Guerra de superficie </option>
+                <option value="29">Transporte de Persona Muy Importante (VIP) </option>
+                <option value="30">Búsqueda y rescate en combate (CSAR) </option>
+                <option value="31">Supresión de defensas aéreas enemigas (SEAD) </option>
+                <option value="32">Guerra antisuperficie </option>
+                <option value="33">Caza-bombardero </option>
+                <option value="34">Cuidados intensivos (aeromédicos) </option>
+                <option value="35">Ataque electrónico (EA) </option>
+                <option value="36">Multimisión </option>
+                <option value="37">Secuestro aéreo / Interferencia ilícita </option>
+                <option value="38">Helicóptero ASW – LAMPS </option>
+                <option value="39">Helicóptero ASW – SH-60R </option>
+              </select>
+
+            </div>
+
+
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select data-amp="icon" data-tab="tab-01">
+                <optgroup label="Militar">
+                  <option value="" selected disabled hidden>Seleccione..</option>
+                  <option value="110000">   Militar </option>
+                  <option value="110100">   Ala Fija (AF) </option>
+                  <option value="110101">   Evacuación Médica (MEDEVAC) (AF) </option>
+                  <option value="110102">   Ataque / Golpe (AF)</option>
+                  <option value="110103">   Bombardero (AF)</option>
+                  <option value="110104">   Caza (AF)</option>
+                  <option value="110105">   Caza-Bombardero (AF)</option>
+                  <option value="110107">   Carga / Transporte de Carga (AF)</option>
+                  <option value="110108">   Combate Electrónico (EC) / Perturbador (Jammer) (AF)</option>
+                  <option value="110109">   Reabastecimiento en Vuelo (Tanquero) (AF)</option>
+                  <option value="110110">   Patrulla (AF)</option>
+                  <option value="110111">   Reconocimiento (AF)</option>
+                  <option value="110112">   Entrenador / Adiestramiento (AF)</option>
+                  <option value="110113">   Utilitario (AF)</option>
+                  <option value="110114">   Despegue y Aterrizaje Vertical o Corto (VSTOL) (AF)</option>
+                  <option value="110115">   Puesto de Comando Aerotransportado (ACP) (AF)</option>
+                  <option value="110116">   Alerta Temprana Aerotransportada (AEW) (AF)</option>
+                  <option value="110117">   Guerra Antisuperficie (AF)</option>
+                  <option value="110118">   Guerra Antisubmarina (AF)</option>
+                  <option value="110119">   Comunicaciones (AF)</option>
+                  <option value="110120">   Búsqueda y Rescate en Combate (CSAR) (AF)</option>
+                  <option value="110121">   Apoyo Electrónico (ES) (AF)</option>
+                  <option value="110122">   Gubernamental (AF)</option>
+                  <option value="110123">   Contramedidas de Minas (MCM) (AF)</option>
+                  <option value="110124">   Recuperación de Personal (AF)</option>
+                  <option value="110125">   Búsqueda y Rescate (SAR) (AF)</option>
+                  <option value="110126">   Fuerzas de Operaciones Especiales (AF)</option>
+                  <option value="110127">   Ultraligero (AF)</option>
+                  <option value="110128">   Reconocimiento Fotográfico (AF)</option>
+                  <option value="110129">   Persona Muy Importante (VIP) (AF)</option>
+                  <option value="110130">   Supresión de Defensas Aéreas Enemigas (SEAD) (AF)</option>
+                  <option value="110131">   Transporte de Pasajeros (AF)</option>
+                  <option value="110132">   Escolta (AF)</option>
+                  <option value="110133">   Ataque Electrónico (EA) (AF)</option>
+                  <option value="110200">   Ala Rotativa (Helicóptero) </option>
+                  <option value="110300">   Aeronave No Tripulada (ANT) / (VANT) / (SANT) / (RPV) </option>
+                  <option value="110400">   UAV de Despegue Vertical (VT-UAV) </option>
+                  <option value="110500">   Más Ligero que el Aire </option>
+                  <option value="110600">   Dirigible </option>
+                  <option value="110700">   Más Ligero que el Aire Amarrado (Cautivo) </option>
+                </optgroup>
+
+                <optgroup label="Civil">
+                  <option value="120000">   Civil </option>
+                  <option value="120100">   Ala Fija </option>
+                  <option value="120200">   Ala Rotativa (Helicóptero) </option>
+                  <option value="120300">   Aeronave No Tripulada (ANT) / (VANT) / (SANT) / (RPV) </option>
+                  <option value="120400">   Más Ligero que el Aire </option>
+                  <option value="120500">   Dirigible </option>
+                  <option value="120600">   Más Ligero que el Aire Amarrado (Cautivo) </option>
+                </optgroup>
+
+                <optgroup label="Otros">
+                  <option value="130000">   Arma </option>
+                  <option value="130100">   Bomba </option>
+                  <option value="130200">   Señuelo (Decoy) </option>
+                  <option value="140000">   Seguimiento Manual (Manual Track) </option>
+                </optgroup>
+              </select>
+
+            </div>
+
+          </div>
+
+
+          <div class="center-anchor" data-slot="center"></div>
+
+          <div class="center-dynamic">
+
+
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select data-amp="m2" data-tab="tab-01">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="00">No Aplicable </option>
+                <option value="01">Pesado </option>
+                <option value="02">Medio </option>
+                <option value="03">Ligero </option>
+                <option value="04">Solo Boom (Pértiga) </option>
+                <option value="05">Solo Drogue (Canastilla) </option>
+                <option value="06">Boom y Drogue </option>
+                <option value="07">Corto Alcance (Close Range) </option>
+                <option value="08">Alcance Corto (Short Range) </option>
+                <option value="09">Alcance Medio (Medium Range) </option>
+                <option value="10">Alcance Largo (Long Range) </option>
+                <option value="11">Enlace Descendente / Transmitido (Downlinked) </option>
+              </select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp="al">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              data-tab="tab-01"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              data-tab="tab-01"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              data-tab="tab-01"
+              placeholder="8km/h" 
+            />
+          </div> 
+
+         <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              data-tab="tab-01"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>G</b> Comentarios del Personal</label>
+            <input
+              type="text"
+              data-amp="g"
+              data-tab="tab-01"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              data-tab="tab-01"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    <div class="tab-content" id="tab-02">
+
+      <div class="tab-header">
+        <h3>Ícono, Amplificadores y Modificadores del conjunto
+        <b>Aire (Misil)</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/aire.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left"></div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione..</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div> 
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select data-amp="m1" data-tab="tab-02">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="00">No especificado </option>
+                <option value="01">Aéreo </option>
+                <option value="02">Superficie </option>
+                <option value="03">Subsuperficie </option>
+                <option value="04">Espacio </option>
+                <option value="05">Antibalístico </option>
+                <option value="06">Balístico </option>
+                <option value="07">Crucero </option>
+                <option value="08">Interceptor </option>
+
+              </select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select data-amp="icon" data-tab="tab-02">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="110000">Misil</option>                
+              </select>
+            </div>
+
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+          
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select data-amp="m2" data-tab="tab-02">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="00">No especificado </option>
+                <option value="01">Aéreo </option>
+                <option value="02">Superficie </option>
+                <option value="03">Subsuperficie </option>
+                <option value="04">Espacio </option>
+                <option value="05">Lanzado </option>
+                <option value="06">Misil </option>
+                <option value="07">Patriot </option>
+                <option value="08">Standard Missile-2 (SM-2) </option>
+                <option value="09">Standard Missile-6 (SM-6) </option>
+                <option value="10">Evolved Sea Sparrow Missile (ESSM) </option>
+                <option value="11">Rolling Airframe Missile (RAM) </option>
+                <option value="12">Corto alcance </option>
+                <option value="13">Alcance medio </option>
+                <option value="14">Alcance intermedio </option>
+                <option value="15">Largo alcance </option>
+                <option value="16">Intercontinental </option>
+
+              </select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div> 
+
+         <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-05">
+                
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Espacio</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left"></div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div> 
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select data-amp="m1" data-tab="tab-05">
+                <option value="00">No Especificado</option>
+                <option value="01">Órbita Terrestre Baja (LEO)</option>
+                <option value="02">Órbita Terrestre Media (MEO)</option>
+                <option value="03">Órbita Terrestre Alta (HEO)</option>
+                <option value="04">Órbita Geosíncrona (GSO)</option>
+                <option value="05">Órbita Geoestacionaria (GO)</option>
+                <option value="06">Órbita Molniya (MO)</option>            
+
+              </select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select data-amp="icon" data-tab="tab-05">
+                  <option value="" selected disabled hidden>
+                  <option value="110000">Militar</option>
+                  <option value="110100">Vehículo Espacial</option>
+                  <option value="110200">Vehículo de Reentrada</option>
+                  <option value="110300">Módulo de Aterrizaje Planetario</option>
+                  <option value="110400">Lanzadera Orbital</option>
+                  <option value="110500">Cápsula</option>
+                  <option value="110600">Satélite, General</option>
+                  <option value="110700">Satélite</option>
+                  <option value="110800">Arma Antisatélite</option>
+                  <option value="110900">Satélite Astronómico</option>
+                  <option value="111000">Biosatélite</option>
+                  <option value="111100">Satélite de Comunicaciones</option>
+                  <option value="111200">Satélite de Observación Terrestre</option>
+                  <option value="111300">Satélite Miniaturizado</option>
+                  <option value="111400">Satélite de Navegación</option>
+                  <option value="111500">Satélite de Reconocimiento</option>
+                  <option value="111600">Estación Espacial</option>
+                  <option value="111700">Satélite Atado</option>
+                  <option value="111800">Satélite Meteorológico</option>
+                  <option value="111900">Vehículo Lanzador Espacial (SLV)</option>
+                  <option value="120000">Civil</option>
+                  <option value="120100">Lanzadera Orbital</option>
+                  <option value="120200">Cápsula</option>
+                  <option value="120300">Satélite</option>
+                  <option value="120400">Satélite Astronómico</option>
+                  <option value="120500">Biosatélite</option>
+                  <option value="120600">Satélite de Comunicaciones</option>
+                  <option value="120700">Satélite de Observación Terrestre</option>
+                  <option value="120800">Satélite Miniaturizado</option>
+                  <option value="120900">Satélite de Navegación</option>
+                  <option value="121000">Estación Espacial</option>
+                  <option value="121100">Satélite Atado</option>
+                  <option value="121200">Satélite Meteorológico</option>
+                  <option value="130000">Seguimiento Manual</option>
+                               
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select data-amp="m2" data-tab="tab-05">
+                <option value="00">No Especificado</option>
+                <option value="01">Óptico</option>
+                <option value="02">Infrarrojo</option>
+                <option value="03">Radar</option>
+                <option value="04">Inteligencia de Señales (SIGINT)</option>
+              </select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div> 
+
+         <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>G</b> Comentarios del Personal</label>
+            <input
+              type="text"
+              data-amp="g"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-06">
+    
+      <div class="tab-header">
+        <h3>Ícono, Amplificadores y Modificadores del conjunto
+        <b>Espacio (Misil)</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left"></div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div> 
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select data-amp="m1" data-tab="tab-06">
+                <option value="00">No Especificado</option>
+                <option value="01">Balístico</option>
+                <option value="02">Espacial</option>
+                <option value="03">Interceptor</option>
+              </select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select data-amp="icon" data-tab="tab-06">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="110000">Misil</option>                
+              </select>
+            </div>
+
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select data-amp="m2" data-tab="tab-06">
+                <option value="00">No Especificado</option>
+                <option value="01">Corto Alcance</option>
+                <option value="02">Alcance Medio</option>
+                <option value="03">Alcance Intermedio</option>
+                <option value="04">Largo Alcance</option>
+                <option value="05">Intercontinental</option>
+                <option value="06">Flecha</option>
+                <option value="07">Interceptor Basado en Tierra (GBI)</option>
+                <option value="08">Patriot</option>
+                <option value="09">Misil Estándar - Fase Terminal (SM-T)</option>
+                <option value="10">Misil Estándar - 3 (SM-3)</option>
+                <option value="11">Defensa Terminal de Área de Gran Altitud (THAAD)</option>
+                <option value="12">Espacial</option>
+              </select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div> 
+
+         <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content active" id="tab-10">
+                
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Unidad de Tierra</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/unidad de tierra.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>W</b> Fecha y Hora</label>
+            <input
+              type="text"
+              data-amp="w"
+              placeholder="30143000ZOCT2007" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>  
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="27">Individuo / Elemento</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="30">Grupo</option>                    
+                  <option value="16">Batallón / Regimiento</option>
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>
+
+            <div class="ut-group">
+              <label><b>C</b> Cantidad</label>
+              <input
+                type="text"
+                data-amp="c"
+                placeholder="350 Camas" 
+              />
+            </div>
+
+            <div class="ut-group">
+              <label><b>D</b> Fuerza de Tarea</label>
+              <select id="task-force" data-amp = "d">
+                <option value="" selected disabled hidden>Seleccione...</option>
+                <option value="none">Ninguno</option>
+                <option value="4">Fuerza de Tarea</option>
+                <option value="5">Fuerza de Tarea de Finta / Simulacro</option>
+                <option value="6">Cuartel General de la Fuerza de Tarea</option>
+                <option value="7">Cuartel General de la Fuerza de Tarea de Finta / Simulacro</option>
+              </select>
+            </div>             
+
+
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select data-amp="m1" data-tab="tab-10">
+                <option value="00">No Especificado</option>
+                <option value="01">Aeromóvil/Asalto Aéreo (solo EE.UU.)</option>
+                <option value="02">Área</option>
+                <option value="03">Ataque</option>
+                <option value="04">Biológico</option>
+                <option value="05">Fronterizo</option>
+                <option value="06">Puente</option>
+                <option value="07">Químico</option>
+                <option value="08">Protección Cercana</option>
+                <option value="09">Combate</option>
+                <option value="10">Mando y Control</option>
+                <option value="11">Paquete de Contingencia de Comunicaciones</option>
+                <option value="12">Construcción</option>
+                <option value="13">Comunicación Intercultural</option>
+                <option value="14">Control de Multitudes y Disturbios</option>
+                <option value="15">Descontaminación</option>
+                <option value="16">Detención</option>
+                <option value="17">Comunicaciones Directas</option>
+                <option value="18">Buceo</option>
+                <option value="19">División</option>
+                <option value="20">Canino</option>
+                <option value="21">Perforación</option>
+                <option value="22">Electro-Óptico</option>
+                <option value="23">Mejorado</option>
+                <option value="24">Disposición de Munición Explosiva (EOD)</option>
+                <option value="25">Centro de Dirección de Fuego</option>
+                <option value="26">Fuerza</option>
+                <option value="27">Avanzado</option>
+                <option value="28">Módulo de Estación Terrestre</option>
+                <option value="29">Apoyo de Desembarco</option>
+                <option value="30">Nodo de Extensión Grande</option>
+                <option value="31">Mantenimiento</option>
+                <option value="32">Meteorológico</option>
+                <option value="33">Medidas Contraminas</option>
+                <option value="34">Misil</option>
+                <option value="35">Asesor Móvil y Apoyo</option>
+                <option value="36">Equipo de Suscriptor Móvil</option>
+                <option value="37">Apoyo de Movilidad</option>
+                <option value="38">Centro de Control de Movimiento</option>
+                <option value="39">Multinacional</option>
+                <option value="40">Unidad Especializada Multinacional</option>
+                <option value="41">Lanzacohetes Múltiple</option>
+                <option value="42">Rol Médico OTAN 1</option>
+                <option value="43">Rol Médico OTAN 2</option>
+                <option value="44">Rol Médico OTAN 3</option>
+                <option value="45">Rol Médico OTAN 4</option>
+                <option value="46">Naval</option>
+                <option value="47">Centro Nodal</option>
+                <option value="48">Nuclear</option>
+                <option value="49">Operaciones</option>
+                <option value="50">Radar</option>
+                <option value="51">Interrogador/Sensor de Identificación por Radiofrecuencia (RFID)</option>
+                <option value="52">Radiológico</option>
+                <option value="53">Búsqueda y Rescate</option>
+                <option value="54">Seguridad</option>
+                <option value="55">Sensor</option>
+                <option value="56">Módulo de Control de Sensor (SCM)</option>
+                <option value="57">Inteligencia de Señales</option>
+                <option value="58">Conmutador de Refugio Simple</option>
+                <option value="59">Lanzacohetes Simple</option>
+                <option value="60">Humo</option>
+                <option value="61">Francotirador</option>
+                <option value="62">Telemetría Acústica</option>
+                <option value="63">Fuerzas de Operaciones Especiales (SOF)</option>
+                <option value="64">Armas y Tácticas Especiales</option>
+                <option value="65">Topografía</option>
+                <option value="66">Explotación Táctica</option>
+                <option value="67">Adquisición de Blancos</option>
+                <option value="68">Topográfico</option>
+                <option value="69">Utilitario</option>
+                <option value="70">Imagen de Video (Cámara de Combate)</option>
+                <option value="71">Accidente</option>
+                <option value="72">Otro</option>
+                <option value="73">Civil</option>
+                <option value="74">Guerra Antisubmarina</option>
+                <option value="75">Evacuación Médica (Medevac)</option>
+                <option value="76">Ranger</option>
+                <option value="77">Apoyo</option>
+                <option value="78">Aviación</option>
+                <option value="98">Cuartel General</option>
+              </select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select data-amp="icon" data-tab="tab-10">
+                <option value="" selected disabled hidden></option>
+                <option value="163400"> ABASTECIMIENTO</option>
+                <option value="201000"> ADMINISTRACIÓN DE SEGURIDAD DEL TRANSPORTE (TSA)</option>
+                <option value="160100"> ADMINISTRATIVO</option>
+                <option value="130302"> ADQUISICIÓN DE OBJETIVOS</option>
+                <option value="160300"> AEROPUERTO DE DESEMBARQUE/AEROPUERTO DE EMBARQUE</option>
+                <option value="200400"> AGENCIA DE CONTROL DE DROGAS (DEA)</option>
+                <option value="164700"> AGUA</option>
+                <option value="121801"> ALA FIJA MISO</option>
+                <option value="150100"> ANÁLISIS</option>
+                <option value="150501"> ANÁLISIS</option>
+                <option value="121101"> ANFIBIO</option>
+                <option value="120300"> ANFIBIOS</option>
+                <option value="120502"> ANFIBIOS</option>
+                <option value="110100"> ANTENAS DE TRANSMISOR DE RADIODIFUSIÓN</option>
+                <option value="110601"> ANTENAS DE TRANSMISOR DE RADIODIFUSIÓN</option>
+                <option value="120400"> ANTITANQUE/ANTIBLOQUE</option>
+                <option value="160600"> APOYO AL SERVICIO DE COMBATE</option>
+                <option value="140200"> APOYO DE COMBATE (MEJORA DE MANIOBRAS)</option>
+                <option value="130500"> APOYO DE FUEGO CONJUNTO</option>
+                <option value="141100"> APOYO GEOESPACIAL/SOPORTE DE INFORMACIÓN GEOESPACIAL</option>
+                <option value="163100"> APOYO RELIGIOSO</option>
+                <option value="121000"> ARMAS COMBINADAS</option>
+                <option value="162300"> ARTILLERÍA</option>
+                <option value="130300"> ARTILLERÍA DE CAMPAÑA</option>
+                <option value="120100"> ASALTO AÉREO CON SUSPENSIÓN ORGÁNICA</option>
+                <option value="110200"> ASUNTOS CIVILES</option>
+                <option value="161600"> ASUNTOS MORTUORIOS/REGISTRO DE TUMBAS</option>
+                <option value="162800"> ASUNTOS PÚBLICOS/INFORMACIÓN PÚBLICA</option>
+                <option value="130301"> AUTOPROPULSADO</option>
+                <option value="130802"> AUTOPROPULSADO CON RUEDAS</option>
+                <option value="120800"> AVIACIÓN ALA FIJA</option>
+                <option value="120600"> AVIACIÓN DEL EJÉRCITO/AVIACIÓN DE ALA GIRATORIA</option>
+                <option value="160500"> BANDA</option>
+                <option value="140104"> BLINDADO DE RECONOCIMIENTO</option>
+                <option value="130801"> BLINDADO/MECANIZADO/CON ORUGAS</option>
+                <option value="121102"> BLINDADO/MECANIZADO/SOBRE ORUGAS</option>
+                <option value="120401"> BLINDADOS</option>
+                <option value="120500"> BLINDADOS/MECANIZADOS/AUTOPROPULSADOS/SOBRE ORUGAS</option>
+                <option value="140400"> BUCEO</option>
+                <option value="150505"> BÚSQUEDA</option>
+                <option value="151100"> BÚSQUEDA</option>
+                <option value="141800"> BÚSQUEDA Y RESCATE</option>
+                <option value="163000"> CABECERA DE FERROCARRIL</option>
+                <option value="150900"> CENTRO DE INTELIGENCIA CONJUNTO</option>
+                <option value="110900"> CENTRO DE RADIOTELETIPO</option>
+                <option value="141600"> COLOCACIÓN DE MINAS</option>
+                <option value="120900"> COMBATE</option>
+                <option value="120700"> COMPUESTO DE AVIACIÓN</option>
+                <option value="140900"> CONSTRUCCIÓN DE CAMPAMENTOS</option>
+                <option value="150200"> CONTRAINTELIGENCIA</option>
+                <option value="110300"> COOPERACIÓN CÍVICO-MILITAR</option>
+                <option value="162700"> CORREO POSTAL</option>
+                <option value="180000"> CUARTEL GENERAL NOMBRADO</option>
+                <option value="180100"> CUERPO DE REACCIÓN RÁPIDA DEL MANDO ALIADO DE EUROPA (ARRC)</option>
+                <option value="130100"> DEFENSA AÉREA</option>
+                <option value="140100"> DEFENSA NUCLEAR QUÍMICA BIOLÓGICA RADIOLÓGICA</option>
+                <option value="200500"> DEPARTAMENTO DE JUSTICIA (DOJ)</option>
+                <option value="140800"> DESACTIVACIÓN DE ARTILLERÍA EXPLOSIVA (EOD)</option>
+                <option value="141400"> DESMINADO DE MINAS</option>
+                <option value="150300"> DIRECCIÓN DE RADIOGRAFÍA</option>
+                <option value="150502"> DIRECCIÓN DE RADIOGRAFÍA</option>
+                <option value="140300"> DIVISIÓN DE INVESTIGACIÓN CRIMINAL</option>
+                <option value="162600"> DUCTO</option>
+                <option value="121803"> EMBARCACIÓN ESPECIAL</option>
+                <option value="110500"> ENLACE</option>
+                <option value="130200"> ENLACE DE FUEGO NAVAL AÉREO/TERRESTRE</option>
+                <option value="140105"> EQUIPADO DE RECONOCIMIENTO</option>
+                <option value="121805"> EQUIPO DE DEMOLICIONES SUBACUÁTICAS</option>
+                <option value="141000"> EXTINCIÓN DE INCENDIOS/PROTECCIÓN CONTRA INCENDIOS</option>
+                <option value="160700"> FINANZAS</option>
+                <option value="121500"> FRANCOTIRADOR</option>
+                <option value="201300"> FUERZA DE SEGURIDAD INTERNA</option>
+                <option value="180300"> FUERZA INTERNACIONAL DE ASISTENCIA PARA LA SEGURIDAD (ISAF)</option>
+                <option value="121800"> FUERZAS DE OPERACIONES ESPECIALES (SOF)</option>
+                <option value="121700"> FUERZAS ESPECIALES</option>
+                <option value="201100"> GUARDIA COSTERA</option>
+                <option value="150500"> GUERRA ELECTRÓNICA</option>
+                <option value="111200"> IMÁGENES DE VIDEO (CÁMARA DE COMBATE)</option>
+                <option value="130000"> INCENDIOS</option>
+                <option value="121100"> INFANTERÍA</option>
+                <option value="140700"> INGENIERÍA</option>
+                <option value="130900"> INSPECCIÓN</option>
+                <option value="162900"> INSPECTOR</option>
+                <option value="161400"> INSTALACIÓN DE TRATAMIENTO MÉDICO</option>
+                <option value="150000"> INTELIGENCIA</option>
+                <option value="150503"> INTERCEPCIÓN</option>
+                <option value="150600"> INTERCEPCIÓN (BÚSQUEDA Y GRABACIÓN)</option>
+                <option value="150504"> INTERFERENCIAS</option>
+                <option value="150800"> INTERFERENCIAS</option>
+                <option value="150700"> INTERROGATORIO</option>
+                <option value="160800"> JUEZ ABOGADO GENERAL</option>
+                <option value="141500"> LANZAMIENTO DE MINAS</option>
+                <option value="161000"> LAVANDERÍA/BAÑO</option>
+                <option value="161100"> MANTENIMIENTO</option>
+                <option value="121400"> MAR, AIRE, TIERRA (SEAL)</option>
+                <option value="121302"> MARINA</option>
+                <option value="161200"> MATERIAL</option>
+                <option value="140101"> MECANIZADO</option>
+                <option value="140701"> MECANIZADO</option>
+                <option value="141701"> MECANIZADO</option>
+                <option value="161300"> MÉDICO</option>
+                <option value="130600"> METEOROLÓGICO</option>
+                <option value="151000"> MILITAR INTELIGENCIA</option>
+                <option value="141300"> MINA</option>
+                <option value="130102"> MISIL</option>
+                <option value="130700"> MISIL</option>
+                <option value="161500"> MORAL,  BIENESTAR Y RECREACIÓN</option>
+                <option value="130800"> MORTERO</option>
+                <option value="121104"> MOTORIZADO</option>
+                <option value="121303"> MOTORIZADO</option>
+                <option value="140102"> MOTORIZADO</option>
+                <option value="140702"> MOTORIZADO</option>
+                <option value="141702"> MOTORIZADO</option>
+                <option value="120402"> MOTORIZADOS</option>
+                <option value="120000"> MOVIMIENTO Y MANIOBRA</option>
+                <option value="180400"> MULTINACIONAL (MN)</option>
+                <option value="160400"> MUNICIONES</option>
+                <option value="170000"> NAVAL</option>
+                <option value="170100"> NAVAL</option>
+                <option value="121200"> OBSERVADOR</option>
+                <option value="130400"> OBSERVADOR DE ARTILLERÍA DE CAMPAÑA</option>
+                <option value="200100"> OFICINA DE ALCOHOL,  TABACO,  ARMAS DE FUEGO Y EXPLOSIVOS (ATF) (DEPARTAMENTO DE JUSTICIA)</option>
+                <option value="163500"> OFICINA DE INFORMACIÓN CONJUNTA (JIB)</option>
+                <option value="200600"> OFICINA FEDERAL DE INVESTIGACIONES (FBI)</option>
+                <option value="190000"> OPERACIÓN DE EMERGENCIA</option>
+                <option value="110600"> OPERACIONES DE APOYO DE INFORMACIÓN MILITAR (MISO)</option>
+                <option value="110400"> OPERACIONES DE INFORMACIÓN</option>
+                <option value="180200"> OPERACIONES DEL MANDO ALIADO</option>
+                <option value="200000"> ORDEN PÚBLICO</option>
+                <option value="142000"> PATRULLA COSTERA</option>
+                <option value="200200"> PATRULLA FRONTERIZA</option>
+                <option value="140600"> PERFORACIÓN</option>
+                <option value="140500"> PERRO</option>
+                <option value="162500"> PETRÓLEO,  ACEITE Y LUBRICANTES</option>
+                <option value="200700"> POLICÍA</option>
+                <option value="141900"> POLICÍA DE SEGURIDAD (AÉREA)</option>
+                <option value="141200"> POLICÍA MILITAR</option>
+                <option value="200800"> PRISIÓN</option>
+                <option value="140000"> PROTECCIÓN</option>
+                <option value="163300"> PUERTO MARÍTIMO DE DESEMBARQUE/PUERTO MARÍTIMO DE EMBARQUE</option>
+                <option value="164800"> PURIFICACIÓN DE AGUA</option>
+                <option value="110700"> RADIO</option>
+                <option value="120601"> RECONOCIMIENTO</option>
+                <option value="120801"> RECONOCIMIENTO</option>
+                <option value="140103"> RECONOCIMIENTO</option>
+                <option value="140703"> RECONOCIMIENTO</option>
+                <option value="121301"> RECONOCIMIENTO Y VIGILANCIA</option>
+                <option value="121300"> RECONOCIMIENTO/CABALLERÍA/EXPLORADOR</option>
+                <option value="120501"> RECONOCIMIENTO/CABALLERÍA/S COUT</option>
+                <option value="110800"> RELÉ DE RADIO</option>
+                <option value="130803"> REMOLCADO</option>
+                <option value="111100"> SATÉLITE TÁCTICO</option>
+                <option value="141700"> SEGURIDAD</option>
+                <option value="151200"> SENSOR</option>
+                <option value="111000"> SEÑAL</option>
+                <option value="200300"> SERVICIO DE ADUANA</option>
+                <option value="201200"> SERVICIO DE ALGUACILES ESTADOUNIDENSES</option>
+                <option value="200900"> SERVICIO SECRETO DE LOS ESTADOS UNIDOS (TREAS) (USSS)</option>
+                <option value="162400"> SERVICIOS DE PERSONAL</option>
+                <option value="120200"> SERVICIOS DE TRÁNSITO AÉREO/OPERACIONES DE AERÓDROMO</option>
+                <option value="121103"> SISTEMA DE CAÑÓN PRINCIPAL</option>
+                <option value="130101"> SISTEMA DE CAÑÓN PRINCIPAL</option>
+                <option value="121900"> SISTEMAS AÉREOS NO TRIPULADOS</option>
+                <option value="160000"> SOSTENIBILIDAD</option>
+                <option value="121804"> SSNR ESPECIAL</option>
+                <option value="163700"> SUMINISTRO DE ESTADOS UNIDOS CLASE I</option>
+                <option value="163800"> SUMINISTRO DE ESTADOS UNIDOS CLASE II</option>
+                <option value="163900"> SUMINISTRO DE ESTADOS UNIDOS CLASE III</option>
+                <option value="164000"> SUMINISTRO DE ESTADOS UNIDOS CLASE IV</option>
+                <option value="164500"> SUMINISTRO DE ESTADOS UNIDOS CLASE IX</option>
+                <option value="164100"> SUMINISTRO DE ESTADOS UNIDOS CLASE V</option>
+                <option value="164200"> SUMINISTRO DE ESTADOS UNIDOS CLASE VI</option>
+                <option value="164300"> SUMINISTRO DE ESTADOS UNIDOS CLASE VII</option>
+                <option value="164400"> SUMINISTRO DE ESTADOS UNIDOS CLASE VIII</option>
+                <option value="164600"> SUMINISTRO DE ESTADOS UNIDOS CLASE X</option>
+                <option value="161800"> SUMINISTRO OTAN CLASE I</option>
+                <option value="161900"> SUMINISTRO OTAN CLASE II</option>
+                <option value="162000"> SUMINISTRO OTAN CLASE III</option>
+                <option value="162100"> SUMINISTRO OTAN CLASE IV</option>
+                <option value="162200"> SUMINISTRO OTAN CLASE V</option>
+                <option value="150400"> TELÉMETRO ELECTRÓNICO</option>
+                <option value="121802"> TIERRA</option>
+                <option value="160200"> TODAS LAS CLASES DE SUMINISTRO</option>
+                <option value="142100"> TOPOGRÁFICA</option>
+                <option value="160900"> TRABAJO</option>
+                <option value="164900"> TRANSMISIÓN</option>
+                <option value="163600"> TRANSPORTE</option>
+                <option value="163200"> UNIDAD DE RETENCIÓN DE REEMPLAZO</option>
+                <option value="161700"> VARIAS CLASES DE SUMINISTRO</option>
+                <option value="121105"> VEHÍCULO DE COMBATE DE INFANTERÍA</option>
+                <option value="121600"> VIGILANCIA</option>
+                <option value="110000">MANDO Y CONTROL</option>
+              </select>
+            </div>
+            
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select data-amp="m2" data-tab="tab-10">
+                <option value="00">No Especificado</option>
+                <option value="01">Aerotransportado</option>
+                <option value="02">Ártico</option>
+                <option value="03">Reparación de Daños de Batalla</option>
+                <option value="04">Equipado con Bicicleta</option>
+                <option value="05">Estadificación de Bajas</option>
+                <option value="06">Limpieza</option>
+                <option value="07">Corto Alcance</option>
+                <option value="08">Control</option>
+                <option value="09">Descontaminación</option>
+                <option value="10">Demolición</option>
+                <option value="11">Dental</option>
+                <option value="12">Digital</option>
+                <option value="13">Sistema Mejorado de Informe de Ubicación (EPLRS)</option>
+                <option value="14">Equipo</option>
+                <option value="15">Pesado</option>
+                <option value="16">Gran Altitud</option>
+                <option value="17">Intermodal</option>
+                <option value="18">Cuidados Intensivos</option>
+                <option value="19">Ligero</option>
+                <option value="20">Laboratorio</option>
+                <option value="21">Lanzador</option>
+                <option value="22">Largo Alcance</option>
+                <option value="23">Baja Altitud</option>
+                <option value="24">Medio</option>
+                <option value="25">Altitud Media</option>
+                <option value="26">Alcance Medio</option>
+                <option value="27">Montaña</option>
+                <option value="28">Gran a Media Altitud</option>
+                <option value="29">Multicanal</option>
+                <option value="30">Óptico (Flash)</option>
+                <option value="31">Animal de Carga</option>
+                <option value="32">Coordinación de Evacuación de Pacientes</option>
+                <option value="33">Mantenimiento Preventivo</option>
+                <option value="34">Psicológico</option>
+                <option value="35">Radio Enlace de Línea de Vista</option>
+                <option value="36">Ferrocarril</option>
+                <option value="37">Recuperación (Sistemas no Tripulados)</option>
+                <option value="38">Recuperación (Mantenimiento)</option>
+                <option value="39">Centro de Coordinación de Rescate</option>
+                <option value="40">Fluvial</option>
+                <option value="41">Canal Simple</option>
+                <option value="42">Esquí</option>
+                <option value="43">Alcance Corto</option>
+                <option value="44">Estratégico</option>
+                <option value="45">Apoyo</option>
+                <option value="46">Táctico</option>
+                <option value="47">Remolcado</option>
+                <option value="48">Tropa</option>
+                <option value="49">Despegue y Aterrizaje Vertical o Corto (VTOL/VSTOL)</option>
+                <option value="50">Veterinario</option>
+                <option value="51">Con Ruedas</option>
+                <option value="52">Alta a Baja Altitud</option>
+                <option value="53">Media a Baja Altitud</option>
+                <option value="54">Ataque</option>
+                <option value="55">Reabastecimiento</option>
+                <option value="56">Utilitario</option>
+                <option value="57">Búsqueda y Rescate en Combate</option>
+
+              </select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>R</b> Movilidad</label>
+              <select id="amp-r" data-amp = "r">
+                <option value="" selected disabled hidden>Seleccione…</option>
+                <option value="31">Campo a través con ruedas (limitado) (En tierra)</option>
+                <option value="32">Campo a través con ruedas (En tierra)</option>
+                <option value="33">Orugas (En tierra)</option>
+                <option value="34">Combinación de ruedas y orugas (En tierra)</option>
+                <option value="35">Remolcado (En tierra)</option>
+                <option value="36">Carril (En tierra)</option>
+                <option value="37">Animales de carga (En tierra)</option>            
+                <option value="41">Sobre nieve (vehículo motriz)</option>
+                <option value="42">Trineo (En Nieve)</option>  
+                <option value="51">Barcaza (En agua)</option>
+                <option value="52">Anfibio (En agua)</option>
+                <option value="61">Conjunto remolcado naval corto</option>
+                <option value="62">Conjunto remolcado naval largo</option>              
+              </select>
+            </div>  
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+
+            <div class="ut-group">
+              <label><b>Q</b> Dirección de Movimiento</label>
+              <input
+                type="text"
+                data-amp="q"
+                placeholder="Solo números entre 0 y 360" 
+              />
+            </div> 
+
+            <div class="ut-group">
+              <label><b>S</b> Indicador de C.G.</label>
+              <select id="amp-s" data-amp = "s">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="0">Desconocido</option>
+                <option value="1">Fingido / Simulacro</option>
+                <option value="2">Cuartel General</option>
+                <option value="3">Cuartel General de Finta / Simulacro</option>
+
+              </select>
+            </div> 
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>F</b> Reforzado o Reducido</label>
+              <select id="amp-f" data-amp = "f">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="none">Normal</option>
+                <option value="(+)">Reforzado (+)</option>
+                <option value="(−)">Reducido (−)</option>
+              </select>
+          </div>
+
+          <div class="ut-group">
+            <label><b>G</b> Comentarios del Personal</label>
+            <input
+              type="text"
+              data-amp="g"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>M</b> Formación Superior</label>
+            <input
+              type="text"
+              data-amp="m"
+              placeholder="Números Romanos" 
+            />
+          </div>
+
+          <div class="ut-group amp-j">
+            <label><b>J</b> Calificación de la Evaluación</label>
+
+            <div style="display:flex; gap:6px;">
+              
+              <select id="amp-j-source">
+                <option value="" selected disabled>Fuente</option>
+                <option value="A">A – Totalmente confiable</option>
+                <option value="B">B – Usualmente confiable</option>
+                <option value="C">C – Bastante confiable</option>
+                <option value="D">D – No siempre confiable</option>
+                <option value="E">E – No confiable</option>
+                <option value="F">F – No se puede juzgar</option>
+              </select>
+
+              
+              <select id="amp-j-cred">
+                <option value="" selected disabled>Información</option>
+                <option value="1">1 – Confirmada</option>
+                <option value="2">2 – Probablemente verdadera</option>
+                <option value="3">3 – Posiblemente verdadera</option>
+                <option value="4">4 – Dudosa</option>
+                <option value="5">5 – Improbable</option>
+                <option value="6">6 – No se puede juzgar</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ut-group">
+            <label><b>K</b> Eficacia de Combate</label>
+            <select id="amp-k" data-amp = "k">
+              <option value="" selected disabled hidden>Seleccione..</option>
+              <option value="none">No especificado</option>
+              <option value="(FO)">Completamente Operacional</option>
+              <option value="(SO)">Sustancialmente Operacional</option>
+              <option value="(MO)">Marginalmente Operacional</option>
+              <option value="(NO)">No Operacional</option>
+              <option value="(UNK)">Desconocido</option>              
+            </select>
+          </div>
+
+          <div class="ut-group">
+            <label><b>SHQ</b> Cuartel General Especial</label>
+            <input
+              type="text"
+              data-amp="shq"
+              placeholder="GN" 
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-11">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Unidad de Tierra Civil / Organización</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>
+                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+
+            <div class="ut-group">
+              <label><b>C</b> Cantidad</label>
+              <input
+                type="text"
+                data-amp="c"
+                placeholder="350 Camas" 
+              />
+            </div>
+
+
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-15">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Equipo Terrestre</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>W</b> Fecha y Hora</label>
+            <input
+              type="text"
+              data-amp="w"
+              placeholder="30143000ZOCT2007" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>
+                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+
+            <div class="ut-group">
+              <label><b>C</b> Cantidad</label>
+              <input
+                type="text"
+                data-amp="c"
+                placeholder="350 Camas" 
+              />
+            </div>
+
+
+
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+
+            <div class="ut-group">
+              <label><b>Q</b> Dirección de Movimiento</label>
+              <input
+                type="text"
+                data-amp="q"
+                placeholder="Solo números entre 0 y 360" 
+              />
+            </div> 
+
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+
+          <div class="ut-group">
+            <label><b>G</b> Comentarios del Personal</label>
+            <input
+              type="text"
+              data-amp="g"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+
+          <div class="ut-group amp-j">
+            <label><b>J</b> Calificación de la Evaluación</label>
+
+            <div style="display:flex; gap:6px;">
+              
+              <select id="amp-j-source">
+                <option value="" selected disabled>Fuente</option>
+                <option value="A">A – Totalmente confiable</option>
+                <option value="B">B – Usualmente confiable</option>
+                <option value="C">C – Bastante confiable</option>
+                <option value="D">D – No siempre confiable</option>
+                <option value="E">E – No confiable</option>
+                <option value="F">F – No se puede juzgar</option>
+              </select>
+
+              
+              <select id="amp-j-cred">
+                <option value="" selected disabled>Información</option>
+                <option value="1">1 – Confirmada</option>
+                <option value="2">2 – Probablemente verdadera</option>
+                <option value="3">3 – Posiblemente verdadera</option>
+                <option value="4">4 – Dudosa</option>
+                <option value="5">5 – Improbable</option>
+                <option value="6">6 – No se puede juzgar</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="ut-group">
+            <label><b>K</b> Eficacia de Combate</label>
+            <select id="amp-k" data-amp = "k">
+              <option value="" selected disabled hidden>Seleccione..</option>
+              <option value="none">No especificado</option>
+              <option value="(FO)">Completamente Operacional</option>
+              <option value="(SO)">Sustancialmente Operacional</option>
+              <option value="(MO)">Marginalmente Operacional</option>
+              <option value="(NO)">No Operacional</option>
+              <option value="(UNK)">Desconocido</option>              
+            </select>
+          </div>
+
+          <div class="ut-group">
+              <label><b>L</b> Firma electrónica detectable</label>
+              <select id="amp-l">
+                  <option value="" selected disabled hidden>Seleccione..</option>
+                  <option value="none">No especificado</option>
+                  <option value="!">Detectable</option>
+                  <!--<option value="detectable">Detectable</option>
+                  <option value="low">Baja</option>
+                  <option value="high">Alta</option>
+                  <option value="jammed">Interferida</option>
+                  <option value="silent">Silencio electrónico</option>-->
+              </select>
+            </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-20">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Instalación de Tierra</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>W</b> Fecha y Hora</label>
+            <input
+              type="text"
+              data-amp="w"
+              placeholder="30143000ZOCT2007" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>
+                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+
+
+
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+
+            <div class="ut-group">
+              <label><b>Q</b> Dirección de Movimiento</label>
+              <input
+                type="text"
+                data-amp="q"
+                placeholder="Solo números entre 0 y 360" 
+              />
+            </div> 
+
+            <div class="ut-group">
+              <label><b>S</b> Indicador de C.G.</label>
+              <select id="amp-s" data-amp = "s">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="0">Desconocido</option>
+                <option value="1">Fingido / Simulacro</option>
+                <option value="2">Cuartel General</option>
+                <option value="3">Cuartel General de Finta / Simulacro</option>
+              </select>
+            </div> 
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+
+          <div class="ut-group">
+            <label><b>G</b> Comentarios del Personal</label>
+            <input
+              type="text"
+              data-amp="g"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+
+          <div class="ut-group amp-j">
+            <label><b>J</b> Calificación de la Evaluación</label>
+
+            <div style="display:flex; gap:6px;">
+              
+              <select id="amp-j-source">
+                <option value="" selected disabled>Fuente</option>
+                <option value="A">A – Totalmente confiable</option>
+                <option value="B">B – Usualmente confiable</option>
+                <option value="C">C – Bastante confiable</option>
+                <option value="D">D – No siempre confiable</option>
+                <option value="E">E – No confiable</option>
+                <option value="F">F – No se puede juzgar</option>
+              </select>
+
+              
+              <select id="amp-j-cred">
+                <option value="" selected disabled>Información</option>
+                <option value="1">1 – Confirmada</option>
+                <option value="2">2 – Probablemente verdadera</option>
+                <option value="3">3 – Posiblemente verdadera</option>
+                <option value="4">4 – Dudosa</option>
+                <option value="5">5 – Improbable</option>
+                <option value="6">6 – No se puede juzgar</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-25">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Medidas de Control</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>W</b> Fecha y Hora</label>
+            <input
+              type="text"
+              data-amp="w"
+              placeholder="30143000ZOCT2007" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>
+                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+
+            <div class="ut-group">
+              <label><b>C</b> Cantidad</label>
+              <input
+                type="text"
+                data-amp="c"
+                placeholder="350 Camas" 
+              />
+            </div>
+              
+
+
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+
+            <div class="ut-group">
+              <label><b>Q</b> Dirección de Movimiento</label>
+              <input
+                type="text"
+                data-amp="q"
+                placeholder="Solo números entre 0 y 360" 
+              />
+            </div> 
+
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-30">
+    
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Superficie de Mar</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/superficie de mar.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left"></div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div> 
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>P</b> Prioridad de visualización</label>
+            <select id="amp-p">
+              <option value="" selected disabled hidden>Seleccione..</option>
+              <option value="none">Normal</option>
+              <option value="low">Baja</option>
+              <option value="medium">Media</option>
+              <option value="high">Alta</option>
+              <option value="critical">Crítica</option>
+            </select>
+          </div>
+
+          <div class="ut-group">
+            <label><b>G</b> Comentarios del Personal</label>
+            <input
+              type="text"
+              data-amp="g"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div> 
+
+        </div>
+      </div>
+    </div>  
+
+    <div class="tab-content" id="tab-35">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Subsuelo de Mar</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/subsuperficie de mar.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left"></div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div> 
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>          
+
+          <div class="ut-group">
+            <label><b>G</b> Comentarios del Personal</label>
+            <input
+              type="text"
+              data-amp="g"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    <div class="tab-content" id="tab-36">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Guerra de Minas</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/subsuperficie de mar.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left"></div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div> 
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+          
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>          
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    <div class="tab-content" id="tab-40">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Actividades</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/actividades.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>W</b> Fecha y Hora</label>
+            <input
+              type="text"
+              data-amp="w"
+              placeholder="30143000ZOCT2007" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>     
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+          
+          
+          <div class="center-dynamic">
+            <div class="ut-group">
+              <label><b>S</b> Indicador de C.G.</label>
+              <select id="amp-s" data-amp = "s">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="0">Desconocido</option>
+                <option value="1">Fingido / Simulacro</option>
+                <option value="2">Cuartel General</option>
+                <option value="3">Cuartel General de Finta / Simulacro</option>
+              </select>
+            </div> 
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>G</b> Comentarios del Personal</label>
+            <input
+              type="text"
+              data-amp="g"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group amp-j">
+            <label><b>J</b> Calificación de la Evaluación</label>
+
+            <div style="display:flex; gap:6px;">
+              
+              <select id="amp-j-source">
+                <option value="" selected disabled>Fuente</option>
+                <option value="A">A – Totalmente confiable</option>
+                <option value="B">B – Usualmente confiable</option>
+                <option value="C">C – Bastante confiable</option>
+                <option value="D">D – No siempre confiable</option>
+                <option value="E">E – No confiable</option>
+                <option value="F">F – No se puede juzgar</option>
+              </select>
+
+              
+              <select id="amp-j-cred">
+                <option value="" selected disabled>Información</option>
+                <option value="1">1 – Confirmada</option>
+                <option value="2">2 – Probablemente verdadera</option>
+                <option value="3">3 – Posiblemente verdadera</option>
+                <option value="4">4 – Dudosa</option>
+                <option value="5">5 – Improbable</option>
+                <option value="6">6 – No se puede juzgar</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-45">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Atmosférico</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/atmosferico.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left"></div>        
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>                
+              </select>
+            </div>
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+          
+          
+          <div class="center-dynamic"></div>
+        </div>
+
+        
+        <div class="ut-column right"></div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-46">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Oceanográfico</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>W</b> Fecha y Hora</label>
+            <input
+              type="text"
+              data-amp="w"
+              placeholder="30143000ZOCT2007" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>
+                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+
+
+
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+          
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-47">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Espacio Meteorológico</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">  
+
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+              
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>               
+              </select>
+            </div>
+
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+          
+          
+          <div class="center-dynamic">
+            
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-50">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Inteligencia de Señales Espacio</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>
+                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+
+
+
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+          
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-51">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Inteligencia de Señales Aéreo</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>
+                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+
+
+
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+          
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-52">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Inteligencia de Señales Terrestre</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>
+                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+
+
+
+
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+          
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-53">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Inteligencia de Señales Superficie</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+
+          
+          <div class="center-anchor" data-slot="center"></div>
+          
+          
+          <div class="center-dynamic">
+
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-54">
+      
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Inteligencia de Señales Subsuelo</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+        <div class="ut-column center">
+
+          
+          <div class="center-dynamic">          
+
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+           
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+
+            
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>
+                
+              </select>
+            </div>         
+          </div>
+          
+          <div class="center-anchor" data-slot="center"></div>
+           
+          <div class="center-dynamic">
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+            </div>  
+          </div>
+        </div>
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-60">
+    
+      <div class="tab-header">
+        <h3>Íconos, Amplificadores y Modificadores del conjunto
+        <b>Ciberespacio</b></h3>
+
+
+        <div class="visualizador-container">
+          <button id="btn-visualizador">Distribución</button>
+
+          <div class="visualizador-preview">
+            <img id="preview-img" src="img/espacio.png" alt="preview">
+          </div>
+        </div>
+      </div>
+
+      <div class="unidad-tierra-grid">
+
+
+        <div class="ut-column left">
+
+          <div class="ut-group">
+            <label><b>X</b> Altitud / Profundidad</label>
+            <input
+              type="text"
+              data-amp="x"
+              placeholder="2200 msnm" 
+            />
+
+          </div>
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="y"
+              placeholder="14N2120000N685000W" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+              placeholder="Radar" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AD</b> Tipo de Plataforma</label>
+            <input
+              type="text"
+              data-amp="ad"
+              placeholder="SAT" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AE</b> Tiempo de desmontaje</label>
+            <input
+              type="text"
+              data-amp="ae"
+              placeholder="15min" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+             <input
+              type="text"
+              data-amp="t"
+              placeholder="" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>Z</b> Velocidad</label>
+            <input
+              type="text"
+              data-amp="z"
+              placeholder="8km/h" 
+            />
+          </div>    
+
+        </div>
+
+
+        <div class="ut-column center">
+         
+          <div class="center-dynamic">          
+              <div class="ut-group">
+                <label><b>AO</b> Barra de Enfrentamiento</label>
+                <select id="engagement-bar" data-amp = "ao">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Sin barra</option>
+                  <option value="planned">Planificado / Anticipado</option>
+                  <option value="engaged">Comprometido</option>
+                </select>
+              </div>
+
+              <div class="ut-group">
+                <label><b>B</b> Escalón de Mando</label>
+                <select id="escalon" data-amp = "b">
+                  <option value="" selected disabled hidden>Seleccione…</option>
+                  <option value="none">Ninguno</option>
+                  <option value="00">Desconocido</option>
+                  <option value="11">Equipo / Dotación</option>
+                  <option value="12">Escuadra</option>
+                  <option value="13">Pelotón / Destacamento</option>
+                  <option value="14">Sección</option>
+                  <option value="15">Compañía / Batería / Escuadrón</option>
+                  <option value="16">Batallón / Regimiento</option>                  
+                  <option value="18">Brigada (Ind./Div.)</option>
+                  <option value="21">División</option>
+                  <option value="22">Cuerpo de Ejército</option>
+                  <option value="23">Ejército de Operaciones</option>
+                  <option value="24">Grupo de Ejércitos</option>
+                  <option value="25">Teatro de Operaciones</option>
+                  <option value="26">Comando</option>
+                </select>
+              </div>    
+
+            <div class="ut-group">
+              <label><b>C</b> Cantidad</label>
+              <input
+                type="text"
+                data-amp="c"
+                placeholder="350 Camas" 
+              />
+            </div>
+            
+            <div class="ut-group">
+              <label>Modificador 1</label>
+              <select id="modifier-1"></select>
+            </div>
+          
+            <div class="ut-group">
+              <label> <b>A</b> Ícono</label>
+              <select id="icon-selector">
+                <option value="" selected disabled hidden></option>                
+              </select>
+            </div>                 
+          </div>
+          
+          <div class="center-anchor" data-slot="center"></div>
+           
+          <div class="center-dynamic">
+            
+            <div class="ut-group">
+              <label>Modificador 2</label>
+              <select id="modifier-2"></select>
+            </div>      
+
+            <div class="ut-group">
+              <label><b>AL</b> Estado Operativo</label>
+              <select id="amp-al" data-amp = "al">
+                <option value="" selected disabled hidden></option>
+                <option value="0">Presente</option>
+                <option value="1">Planificado / Anticipado / Sospechoso</option>
+                <option value="2">Presente / Plenamente funcional</option>
+                <option value="3">Presente / Dañado</option>
+                <option value="4">Presente / Destruido</option>
+                <option value="5">Presente / Al máximo de su capacidad</option>
+              </select>
+            </div>  
+          </div>
+        </div>
+
+        
+        <div class="ut-column right">
+
+          <div class="ut-group">
+            <label><b>H</b> Información Adicional</label>
+             <input
+              type="text"
+              data-amp="h"
+              placeholder="Específico de la implementación" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AF</b> Identificador Común</label>
+            <input
+              type="text"
+              data-amp="af"
+              placeholder="PANTERA" 
+            />
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/index_soloOTAN.js"></script>
+
+  <div id="visualizador-modal" class="visualizador-modal">
+    <div class="visualizador-modal-content">
+      <span id="visualizador-close">✖</span>
+      <img id="modal-img" src="" alt="visualizador">
+    </div>
+  </div>
+
+</body>
+</html>

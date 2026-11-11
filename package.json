@@ -198,6 +198,7 @@
     "lrucache": "1.0.3",
     "mapillary-js": "4.1.2",
     "md5": "2.3.0",
+    "milsymbol": "^3.0.4",
     "moment": "2.29.4",
     "node-geo-distance": "1.2.0",
     "object-fit-images": "3.2.4",

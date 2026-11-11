@@ -53,23 +53,23 @@ You have to get the following information:
 
 In order to configure the generic OpenID provider you have to:
 
-- create/edit `mapstore-ovr.properties` file (in data-dir or class path) to configure the generic provider this way:
+- create/edit `tecutli-ovr.properties` file (in data-dir or class path) to configure the generic provider this way:
 
 ```properties
 # enables the keycloak OpenID Connect filter
 oidcOAuth2Config.enabled=true
 
 # note: this is the client id have to be present on the OpenID provider
-oidcOAuth2Config.clientId=mapstore-server
+oidcOAuth2Config.clientId=tecutli-server
 oidcOAuth2Config.clientSecret=<THE_CLIENT_SECRET>
 # the discovery URL
-oidcOAuth2Config.discoveryUrl=http://keycloak:8080/auth/realms/mapstore/.well-known/openid-configuration
+oidcOAuth2Config.discoveryUrl=http://keycloak:8080/auth/realms/tecutli/.well-known/openid-configuration
 oidcOAuth2Config.sendClientSecret=true
 # create the user if not present
 oidcOAuth2Config.autoCreateUser=true
-oidcOAuth2Config.redirectUri=http://localhost:8080/mapstore/rest/geostore/openid/oidc/callback
+oidcOAuth2Config.redirectUri=http://localhost:8080/tecutli/rest/geostore/openid/oidc/callback
 # Internal redirect URI (you can set it to relative path like this `../../..` to make this config work across domain)
-oidcOAuth2Config.internalRedirectUri=http://localhost:8080/mapstore
+oidcOAuth2Config.internalRedirectUri=http://localhost:8080/tecutli
 # user name attribute (default is `email`)
 # oidcOAuth2Config.principalKey=email
 # Optional role claims, if a claim contains roles, you can map them to MapStore roles. (roles can be only ADMIN or USER)
@@ -131,7 +131,7 @@ Microsoft Azure provides OpenID Connect support. This is an example of how to co
 Here a quick summary of the steps to configure Microsoft Azure as an OpenID provider and get the information needed to configure MapStore:
 
 1. Create a new application ![Create azure application](img/azure-1.jpg)
-2. Set the proper valid redirect URLs ![set redirect URL](img/azure-2.jpg) to: `https://<your-domain>/mapstore/rest/geostore/openid/oidc/callback`
+2. Set the proper valid redirect URLs ![set redirect URL](img/azure-2.jpg) to: `https://<your-domain>/tecutli/rest/geostore/openid/oidc/callback`
 3. Create and copy the client secret ![Create and copy client secret](img/azure-3.jpg)
 4. Add optional claims if needed ![Add optional claims](img/azure-4.jpg)
 5. Copy endpoints and data to configure MapStore ![Copy endpoints](img/azure-5.jpg)
@@ -141,7 +141,7 @@ Please refer the official documentation for any detail or additional configurati
 
 Here below an example of how to fill MapStore configuration files with the data above: (in this example we are using **MapStore data directory** )
 
-`mapstore-ovr.properties`:
+`tecutli-ovr.properties`:
 
 ```properties
 # enables the OpenID Connect filter
@@ -157,9 +157,9 @@ oidcOAuth2Config.sendClientSecret=true
 # create the user if not present
 oidcOAuth2Config.autoCreateUser=true
 # Here you have to set your redirect URI (here is configured for localhost)
-oidcOAuth2Config.redirectUri=http://localhost:8080/mapstore/rest/geostore/openid/oidc/callback
+oidcOAuth2Config.redirectUri=http://localhost:8080/tecutli/rest/geostore/openid/oidc/callback
 # Internal redirect URI (you can set it to relative path like this `../../..` to make this config work across domain)
-oidcOAuth2Config.internalRedirectUri=http://localhost:8080/mapstore
+oidcOAuth2Config.internalRedirectUri=http://localhost:8080/tecutli
 ```
 
 `configs/localConfig.json.patch` ( *with a custom title and an image with the Microsoft logo* to show in the login form)
@@ -209,7 +209,7 @@ Please follow the [Google documentation](https://developers.google.com/identity/
 
 After the setup, you will have to:
 
-- create/edit the `mapstore-ovr.properties` file (in data-dir or class path) to configure the Google OpenID integration by inserting in particular the `clientId` and the `clientSecret` obtained from Google Console. You have also to set the `autoCreateUser` to `true` to create the user if not present in the MapStore database:
+- create/edit the `tecutli-ovr.properties` file (in data-dir or class path) to configure the Google OpenID integration by inserting in particular the `clientId` and the `clientSecret` obtained from Google Console. You have also to set the `autoCreateUser` to `true` to create the user if not present in the MapStore database:
 
 Here an example of the configuration, documented inline:
 
@@ -226,9 +226,9 @@ googleOAuth2Config.clientSecret=<the_client_secret_from_google_dev_console>
 googleOAuth2Config.autoCreateUser=true
 
 # Redirect URL (needs to be configured in the Google Console too)
-googleOAuth2Config.redirectUri=https://<your-appliction-domain>/mapstore/rest/geostore/openid/google/callback
+googleOAuth2Config.redirectUri=https://<your-appliction-domain>/tecutli/rest/geostore/openid/google/callback
 # Internal redirect URI (you can set it to relative path like this `../../..` to make this config work across domain)
-googleOAuth2Config.internalRedirectUri=https://<your-appliction-domain>/mapstore/
+googleOAuth2Config.internalRedirectUri=https://<your-appliction-domain>/tecutli/
 
 ## discoveryUrl: contains all the information for the specific service.
 googleOAuth2Config.discoveryUrl=https://accounts.google.com/.well-known/openid-configuration
@@ -280,7 +280,7 @@ Create a new Client on keycloak. In this guide we will name it `mapstore-server`
 
 ### Configure MapStore back-end for Keycloak OpenID
 
-Create/edit `mapstore-ovr.properties` file (in data-dir or class path) to configure the keycloak provider this way:
+Create/edit `tecutli-ovr.properties` file (in data-dir or class path) to configure the keycloak provider this way:
 
 ```properties
 # enables the keycloak OpenID Connect filter

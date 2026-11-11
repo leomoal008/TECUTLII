@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de símbolos MSAyTM</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <script src="js/gensimOTAN.js"></script>
+</head>
+
+<body>
+  <div class="app-window">
+
+    <!-- HEADER -->
+      <div class="app-header">
+          <img src="img/izq.png" class="logos logo-izq">
+          <div class="titulos">
+              <div class="titulo-principal">
+                  Generador de símbolos conforme<br>
+                  el Manual de Símbolos, Abreviaturas y Terminología Militar (Edición 2024).
+              </div>
+              <div class="subtitulo">Prototipo por D.G.CART.</div>
+          </div>
+          <!-- <img src="img/der_cent_rodela_mas_mas.png" class="logos logo-der">-->
+      </div>
+
+    <!-- AFILIACIÓN Y FUERZA ARMADA EN LA MISMA LÍNEA -->
+    <div class="identity-block">
+      <div class="separador1"></div>
+     
+      <div class="identity-title">Afiliación:</div>
+
+      <div class="contenedor-botones" id="afiliacionBotones"></div>
+
+
+      <div class="selector-line">
+
+        <div class="selector-item-horizontal left">
+          <label>Fuerza armada:</label>
+          <div class="ms-select" id="fuerzaSelect">
+            <div class="ms-selected" id="fuerzaSelected"></div>
+            <div class="ms-options" id="fuerzaOptions"></div>
+            <div class="ms-overlay"></div>
+          </div>
+        </div>
+
+        <div class="selector-item-horizontal right">
+          <label>: Tipo</label>
+          <div class="ms-select" id="tipoSelect">
+            <div class="ms-selected" id="tipoSelected"></div>
+            <div class="ms-options" id="tipoOptions"></div>
+            <div class="ms-overlay"></div>
+          </div>
+        </div>        
+      </div>
+
+      <div class="selector-line">
+        <div class="selector-item-horizontal">
+          <label><b>B</b> Escalón:</label>
+          <div class="ms-select" id="echelonSelect">
+            <div class="ms-selected" id="echelonSelected"></div>
+            <div class="ms-options" id="echelonOptions"></div>
+            <div class="ms-overlay"></div>
+          </div>        
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <!-- ZONA PRINCIPAL -->
+    <div class="fixed-top">
+      <div class="three-columns">
+        
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="column left-column">    
+          <div class="ut-group">
+            <label><b>AA</b> Cuartel General Especial</label>
+            <input
+              type="text"
+              data-amp="aa"
+            />
+          </div> 
+
+          <div class="ut-group">
+            <label><b>Y</b> Ubicación</label>
+            <input
+              type="text"
+              data-amp="w" 
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>V</b> Tipo de equipo</label>
+            <input
+              type="text"
+              data-amp="v"
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>T</b> Designación Única</label>
+            <input type="text" data-amp="z" />
+          </div>
+
+          <div class="ut-group">
+            <label><b>AL</b> Eficacia de Combate</label>
+            <select id="amp-al" data-amp="al">
+              <option value="" selected disabled hidden>Seleccione…</option>
+              <option value="">Ninguno</option>
+              <option value="2">Completamente operacional</option>
+              <option value="3">Substancialmente operacional</option>
+              <option value="4">Marginalmente operacional</option>
+              <option value="5">No operacional</option>
+            </select>
+          </div>
+
+          <div class="ut-group">
+            <label><b>R</b> Movilidad</label>
+            <select id="amp-r" data-amp = "r">
+              <option value="" selected disabled hidden>Seleccione…</option>
+              <option value="">Ninguno</option>
+              <option value="31">Campo a través con ruedas (limitado) (En tierra)</option>
+              <option value="32">Campo a través con ruedas (En tierra)</option>
+              <option value="33">Orugas (En tierra)</option>
+              <option value="34">Combinación de ruedas y orugas (En tierra)</option>
+              <option value="35">Remolcado (En tierra)</option>
+              <option value="36">Carril (En tierra)</option>
+              <option value="37">Animales de carga (En tierra)</option>            
+              <option value="41">Sobre nieve (vehículo motriz)</option>
+              <option value="42">Trineo (En Nieve)</option>  
+              <option value="51">Barcaza (En agua)</option>
+              <option value="52">Anfibio (En agua)</option>
+              <option value="61">Conjunto remolcado naval corto</option>
+              <option value="62">Conjunto remolcado naval largo</option>              
+            </select>
+          </div>  
+
+        </div>
+        
+        <!-- COLUMNA CENTRO - VISUALIZADOR -->
+        <div class="column center-column">
+          <div id="symbol-viewer">
+            <div id="resultado"></div>
+          </div>
+
+          <label>
+            <input type="checkbox" id="text-bg-toggle" checked>
+            Fondo blanco en Amplificadores
+          </label> 
+          
+          <div class="identity-selectors">
+            <button id="download-svg">Descargar SVG</button>
+            <button id="download-png">Descargar PNG</button>
+          </div>
+
+        </div>
+        
+        <!-- COLUMNA DERECHA - CONTROLES -->
+        <div class="column right-column">
+          <div class="ut-group">
+            <label><b>F</b> Agregado o destacado (reforzado o reducido)</label>
+              <select id="amp-f" data-amp = "f">
+                <option value="" selected disabled hidden>Seleccione..</option>
+                <option value="">Normal</option>
+                <option value="(+)">Reforzado (+)</option>
+                <option value="(−)">Reducido (−)</option>
+              </select>
+          </div>
+
+          <div class="ut-group">
+            <label><b>G</b> Comentarios de Plana / Estado Mayor</label>
+            <input
+              type="text"
+              data-amp="g"
+            />
+          </div>
+
+          <div class="ut-group">
+            <label><b>H</b> Información adicional</label>
+            <div class="h-inline">
+              <input 
+                type="text" 
+                data-amp="h1" 
+                id="h1-input"
+                placeholder="Línea 1"
+              />
+              <input 
+                type="text" 
+                data-amp="h2" 
+                id="h2-input"
+                placeholder="Línea 2"
+              />
+            </div>
+          </div>
+
+          <div class="ut-group">
+            <label><b>M</b> Número de unidad superior</label>
+            <input
+              type="text"
+              data-amp="m"
+            />
+          </div> 
+          
+          <div class="ut-group">
+            <label><b>S</b> Elemento de Cuartel General</label>
+            <input
+              type="text"
+              id="hq-element"
+              placeholder="Ej: MAIN"
+              data-amp="s"
+            />
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="selector-line">
+
+      <div class="selector-item-horizontal-2">
+        <label><b>A</b> Ícono:</label>
+        <div class="ms-select" id="iconoSelect">
+          <div class="ms-selected" id="iconoSelected"></div>
+          <div class="ms-options" id="iconoOptions"></div>
+          <div class="ms-overlay"></div>
+        </div>
+      </div>
+
+      <div class="selector-item-horizontal-2">
+        <label>Modificador 1:</label>
+        <div class="ms-select" id="mod1Select">
+          <div class="ms-selected" id="mod1Selected"></div>
+          <div class="ms-options" id="mod1Options"></div>
+          <div class="ms-overlay"></div>
+        </div>
+      </div>
+
+      <div class="selector-item-horizontal-2">
+        <label>Modificador 2:</label>
+        <div class="ms-select" id="mod2Select">
+          <div class="ms-selected" id="mod2Selected"></div>
+          <div class="ms-options" id="mod2Options"></div>
+          <div class="ms-overlay"></div>
+        </div>
+      </div>
+    </div>
+
+    <label>
+      <input type="checkbox" id="hq"> Indicador de Cuartel General
+    </label>
+
+    <button id="btnBibliografia" class="btn-bibliografia">Ayuda</button>
+    
+
+      <!-- <label style="display:flex; align-items:center; gap:8px;">
+        <input type="checkbox" id="toggle-tooltips" checked>
+        Mostrar información al pasar el cursor
+      </label> -->
+
+      <button id="btn-limpiar" class="btn-limpiar">Limpiar Símbolo</button>
+
+  </div>
+  
+  <script src="js/index_MSAyTM.js"></script>
+</body>
+</html>

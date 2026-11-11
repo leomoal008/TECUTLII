@@ -1,0 +1,78 @@
+HTTPS para MapStore/Tecutli con No-IP y dirección pública dinámica
+
+Sí, se puede. No-IP actualiza el registro DNS para que un nombre estable (por ejemplo, mapas-ejemplo.ddns.net) apunte a la dirección pública actual. El certificado HTTPS se emite para ese nombre DNS, no para la dirección IP; por eso normalmente sigue siendo válido cuando la IP cambia.
+
+Para un sitio accesible desde Internet, se recomienda un certificado público automatizado (por ejemplo, Let's Encrypt) en vez de un certificado autofirmado. Así se evitan las advertencias del navegador y no hay que instalar manualmente una autoridad de confianza en todos los dispositivos. HTTPS también permite que el navegador habilite la geolocalización de MapStore.
+
+Suposiciones
+
+- El archivo desplegado se llama tecutli.war. Tomcat lo publica normalmente en /tecutli/.
+- Tomcat está instalado en Windows y actualmente atiende HTTP en el puerto 8585.
+- El nombre No-IP usado en los ejemplos es mapas-ejemplo.ddns.net. Sustituirlo por el nombre real.
+- El router permite configurar redirección de puertos hacia el equipo Tomcat.
+
+1. Configurar No-IP
+
+1. Crear o elegir un hostname DNS en No-IP, por ejemplo mapas-ejemplo.ddns.net.
+2. Instalar No-IP DUC en el equipo o en el router y configurarlo con la cuenta propietaria del hostname. Asegurarse de que el DUC actualiza el hostname correcto y se inicia automáticamente.
+3. En PowerShell, comprobar que el nombre resuelve a la IP pública actual:
+
+   Resolve-DnsName mapas-ejemplo.ddns.net
+
+4. Comparar el resultado con la IP pública que muestra el router o el proveedor de Internet. Puede haber unos minutos de demora después de cambiar la IP.
+
+2. Comprobar que se puede alojar el sitio
+
+- El router debe reenviar TCP 80 y TCP 443 desde Internet al equipo Tomcat (o al proxy inverso descrito más abajo).
+- Permitir esos puertos en el firewall de Windows.
+- El proveedor de Internet debe permitir conexiones entrantes y asignar una IP pública. Si la conexión está detrás de CGNAT, el reenvío de puertos no será suficiente; solicitar una IP pública al proveedor o usar un túnel/proxy/VPN compatible.
+- Mantener Tomcat Manager y Host Manager restringidos a localhost o a la red administrativa. No publicarlos en Internet.
+
+3. Opción recomendada: proxy inverso Caddy
+
+Un proxy inverso evita guardar el certificado público en Tomcat y automatiza su emisión y renovación. Caddy obtiene y renueva certificados automáticamente si el DNS resuelve correctamente al servidor y los puertos 80 y 443 llegan a Caddy.
+
+1. Instalar Caddy para Windows desde su sitio oficial y configurarlo para iniciarse como servicio de Windows.
+2. Crear un archivo Caddyfile junto a caddy.exe con este contenido, sustituyendo el hostname:
+
+   mapas-ejemplo.ddns.net {
+       reverse_proxy 127.0.0.1:8585
+   }
+
+3. Iniciar el servicio Caddy y revisar su log. Caddy debe poder recibir conexiones entrantes en los puertos 80 y 443 para completar la validación y renovar el certificado.
+4. En el router, reenviar TCP 80 y 443 al equipo que ejecuta Caddy. No es necesario exponer públicamente el puerto 8585.
+5. Si ningún otro cliente de la LAN necesita conectarse directamente a Tomcat, limitar el conector HTTP de Tomcat a la interfaz loopback (address="127.0.0.1") y reiniciar Tomcat. No limitarlo así si otros servicios legítimos de la LAN dependen del puerto 8585.
+6. Acceder a:
+
+   https://mapas-ejemplo.ddns.net/tecutli/
+
+Caddy debe ejecutarse en el mismo equipo que Tomcat para que reverse_proxy 127.0.0.1:8585 funcione tal cual. Si se ejecuta en otro equipo, cambiar 127.0.0.1 por la dirección LAN del servidor Tomcat y permitir esa conexión solo desde el proxy.
+
+4. Alternativa: TLS directamente en Tomcat
+
+También se puede configurar un conector TLS en Tomcat y usar un certificado emitido para el hostname No-IP. Para un hostname público, usar un cliente ACME compatible con Windows que permita exportar/renovar un keystore PKCS#12 (.p12/.pfx) para Tomcat. Configurar el conector HTTPS con la ruta del keystore, su tipo PKCS12 y contraseña. Añadir una acción de renovación que actualice el keystore y recargue o reinicie Tomcat.
+
+La validación ACME HTTP-01 necesita que el hostname resuelva al servidor y que el puerto 80 sea accesible durante la emisión y renovación. El cliente ACME debe poder responder al desafío en ese puerto. Si se usa el puerto HTTPS 8443 en lugar del estándar 443, la URL será https://mapas-ejemplo.ddns.net:8443/tecutli/ y el router/firewall también debe permitir TCP 8443.
+
+No se debe copiar un keystore que contenga la clave privada a los dispositivos cliente. Para confiar en un certificado público, los clientes no necesitan instalar ningún archivo.
+
+5. Si se decide usar certificado autofirmado
+
+- El certificado debe incluir el hostname No-IP exacto en el SAN como DNS, por ejemplo DNS:mapas-ejemplo.ddns.net. No basta con poner la IP pública, ya que puede cambiar.
+- Se puede reutilizar aunque cambie la IP pública mientras el hostname siga siendo el mismo y el certificado no haya vencido.
+- Cada dispositivo cliente tendrá que confiar manualmente en el certificado. Importar el certificado público (nunca el keystore ni la clave privada) en cada equipo/navegador. Sin esa confianza, el navegador mostrará una advertencia y algunas funciones seguras pueden no quedar habilitadas.
+- Un autofirmado no es la opción recomendada para un servicio público; preferir un certificado ACME confiable y renovable.
+
+6. Prueba final
+
+1. Desde un dispositivo externo a la red local, abrir https://mapas-ejemplo.ddns.net/tecutli/.
+2. Confirmar que el navegador muestra una conexión segura, sin advertencia de certificado.
+3. Autorizar la ubicación para ese hostname en los permisos del navegador y probar el botón de geolocalización.
+4. Cuando cambie la IP pública, confirmar que No-IP DUC actualizó el DNS y que el sitio sigue respondiendo. No es necesario volver a emitir el certificado solo por el cambio de IP si el hostname no cambió.
+
+Seguridad
+
+- Publicar solo los puertos necesarios (80/443 para el proxy, o el puerto HTTPS elegido para Tomcat).
+- No publicar los puertos de Manager, Host Manager, AJP ni el HTTP de Tomcat si se usa proxy inverso.
+- Usar contraseñas fuertes para No-IP y para las cuentas administrativas de Tomcat.
+- Un dominio dinámico no garantiza disponibilidad: el DUC, el router, el proveedor y el equipo servidor deben permanecer operativos.

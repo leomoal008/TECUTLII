@@ -12,7 +12,7 @@
         "group": "background",
         "name": "osm:osm_simple_light",
         "opacity": 1,
-        "title": "OSM Simple Light",
+        "title": "",
         "thumbURL": "product/assets/img/osm-simple-light.jpg",
         "type": "wms",
         "url": [
@@ -25,10 +25,7 @@
         ],
         "tileSize": 512,
         "visibility": false,
-        "singleTile": false,
-        "credits": {
-          "title": "OSM Simple Light | Rendering <a href=\"https://www.geo-solutions.it/\">GeoSolutions</a> | Data © <a href=\"http://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>"
-        }
+        "singleTile": false
       },
       {
         "format": "image/jpeg",
@@ -48,10 +45,7 @@
         ],
         "tileSize": 512,
         "visibility": false,
-        "singleTile": false,
-        "credits": {
-          "title": "OSM Simple Dark | Rendering <a href=\"https://www.geo-solutions.it/\">GeoSolutions</a> | Data © <a href=\"http://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>"
-        }
+        "singleTile": false
       },
       {
         "format": "image/jpeg",
@@ -70,11 +64,8 @@
           "https://maps6.geosolutionsgroup.com/geoserver/wms"
         ],
         "tileSize": 512,
-        "visibility": true,
-        "singleTile": false,
-        "credits": {
-          "title": "OSM Bright | Rendering <a href=\"https://www.geo-solutions.it/\">GeoSolutions</a> | Data © <a href=\"http://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"http://www.openstreetmap.org/copyright\">ODbL</a>"
-        }
+        "visibility": false,
+        "singleTile": false
       },
       {
         "format": "image/jpeg",
@@ -94,10 +85,7 @@
         ],
         "tileSize": 512,
         "visibility": false,
-        "singleTile": false,
-        "credits": {
-          "title": "<p></p>\n"
-        }
+        "singleTile": false
       },
       {
         "format": "image/jpeg",

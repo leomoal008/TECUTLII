@@ -393,7 +393,7 @@
     },
     "home": {
       "open": "Abrir",
-      "shortDescription": "<h1>Bienvenido a MapStore</h1><p>Mapas web modernos con OpenLayers, Cesium, Leaflet y ReactJS.</p>",
+      "shortDescription": "<h1>Sistema Geoespacial</h1> <h1>TECUTLI</h1> <p>Dirección General de Cartografía.</p>",
       "forkMeOnGitHub": "Fork me on GitHub",
       "description": "MapStore está hecho para crear, guardar y compartir de forma simple e intuitiva mapas y composiciones creados a partir de contenidos de servidores tales como OpenStreetMap, Google Maps, MapQuest o  cualquier otro servidor que proporcione protocolos estándar tales como OGC WMS, WFS, WMTS o TMS y otros.<br/>Visite nuestra <a href=\"https://mapstore.readthedocs.io/en/latest/\">página principal</a> para más detalles.",
       "Applications": "Aplicaciones",
@@ -799,8 +799,7 @@
       "projection": "Sistema de coordenadas",
       "projectionmismatch": "Falta de coincidencia del sistema de coordenadas entre el mapa impreso y en pantalla",
       "graticule": "agregar cuadrícula con etiquetas",
-      "additionalLayers": "Incluir superposiciones",
-      "createScaleOption": "Añadir nueva escala a la lista"
+      "additionalLayers": "Incluir superposiciones"
     },
     "backgroundSwitcher": {
       "tooltip": "Selección del fondo"
@@ -1590,8 +1589,8 @@
       },
       "formats": {
         "mapstore2": {
-          "label": "MapStore",
-          "description": "<p><small>Formato de configuración del mapa MapStore</small></p>"
+          "label": "Json",
+          "description": "<p><small>Formato de configuración del mapa TECUTLI</small></p>"
         },
         "wmc": {
           "label": "WMC",
@@ -1989,7 +1988,6 @@
     "layerdownload": {
       "title": "Exportar los datos",
       "service": "Servicio",
-      "downloadMode": "Modo de exportación",
       "format": "Formato de fichero",
       "srs": "Sistema de referencia espacial",
       "export": "Exportar",
@@ -2019,16 +2017,6 @@
         "executeProcessXhrFailed": "¡La solicitud ExecuteProcess falló! El servidor puede estar mal configurado o no se puede acceder",
         "getExecutionStatusXhrFailed": "¡La solicitud GetExecutionStatus falló! El servidor puede estar mal configurado o no se puede acceder",
         "unexpectedError": "Ocurrió un error inesperado"
-      },
-      "services": {
-        "wps": {
-          "title": "Asíncrono",
-          "tooltip": "El modo asíncrono con WPS (Web Processing Service) se lleva a cabo ejecutando un proceso remoto; una vez completado el procesamiento, se te mostrará una notificación para descargar los datos."
-        },
-        "wfs": {
-          "title": "Síncrono",
-          "tooltip": "La descarga síncrona con WFS (Web Feature Service), adecuada para datos de pequeño tamaño, se realiza enviando una solicitud que devuelve inmediatamente un archivo vectorial."
-        }
       },
       "noSupportedServiceFound": "¡El servidor no admite la descarga de WFS o WPS para esta capa!"
     },
@@ -2133,7 +2121,6 @@
           "useTheSelectedLayer": "Usar la capa seleccionada",
           "connectToAMap": "Conectarse a otro widget",
           "connectToTheMap": "Conectar al mapa",
-          "connectToTheTable": "Conectar a la tabla",
           "selectMapToConnect": "Seleccione el widget para conectarse",
           "clearConnection": "Borrar conexión",
           "disableConnectToMap": "Operación no disponible",
@@ -2488,7 +2475,8 @@
       "triangle": "Triángulo",
       "star": "Estrella",
       "cross": "Cruz",
-      "x": "X"
+      "x": "X",
+      "burg02":  "xd_nn"
     },
     "styler": {
       "tooltip": "Crear y editar estilo de la capa",
@@ -2630,6 +2618,7 @@
       "triangle": "Triángulo",
       "star": "Estrella",
       "cross": "Cruz",
+      "burg02": "xd_nn",
       "x": "X",
       "verticalLine": "Línea vertical",
       "horizontalLine": "Línea horizontal",
@@ -2976,8 +2965,7 @@
       "errorUpdatingGSInstance": "Error al guardar la instancia de GS.",
       "errorDuplicateGSInstance": "Instancia GS duplicada.",
       "errorDeleteGSInstance": "Error al eliminar instancias de GS.",
-      "errorDeleteGSInstanceWithExistRelRules": "Error: hay reglas relacionadas con la instancia GS \"{gsInstanceTitle}\". Elimínelas primero.",
-      "successDeleteGSInstance": "{successfulNum} {successItemLabel} eliminados con éxito {failureMsg}",
+      "successDeleteGSInstance": "La instancia de GS se ha eliminado correctamente.",
       "successSavedGSInstance": "La instancia de GS se ha guardado correctamente.",
       "errorLoading": "Error de carga",
       "deleteModal": "Borrar la regla",
@@ -4377,7 +4365,6 @@
       "readLess": "Leer menos",
       "noPermissionsAvailable": "No hay permisos disponibles",
       "noAbout": "No hay información adicional sobre el recurso",
-      "loadingAbout": "Cargando sobre...",
       "addResource": "Agregar recurso",
       "createMap": "Crear mapa",
       "createDashboard": "Crear panel",
